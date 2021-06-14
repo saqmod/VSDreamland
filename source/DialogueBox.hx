@@ -30,6 +30,9 @@ class DialogueBox extends FlxSpriteGroup
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
+	var bf:FlxSprite;
+	var yumi:FlxSprite;
+	var bat:FlxSprite;
 
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
@@ -87,6 +90,11 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
+			case 'Song One' | 'Song Two' | 'Song Three':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByIndices('normal', 'Speech Bubble Normal', [4], "", 24);
 		}
 
 		this.dialogueList = dialogueList;
@@ -111,6 +119,27 @@ class DialogueBox extends FlxSpriteGroup
 		portraitRight.scrollFactor.set();
 		add(portraitRight);
 		portraitRight.visible = false;
+
+		bf = new FlxSprite(0, 40);
+		bf.frames = Paths.getSparrowAtlas('bfPortrait', 'shared');
+		bf.updateHitbox();
+		bf.scrollFactor.set();
+		add(bf);
+		bf.visible = false;
+
+		yumi = new FlxSprite(-20, 40);
+		yumi.frames = Paths.getSparrowAtlas('yumiPortrait', 'shared');
+		yumi.updateHitbox();
+		yumi.scrollFactor.set();
+		add(yumi);
+		yumi.visible = false;
+
+		bat = new FlxSprite(-20, 40);
+		bat.frames = Paths.getSparrowAtlas('batPortrait', 'shared');
+		bat.updateHitbox();
+		bat.scrollFactor.set();
+		add(bat);
+		bat.visible = false;
 		
 		box.animation.play('normalOpen');
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
@@ -247,6 +276,25 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					portraitRight.visible = true;
 					portraitRight.animation.play('enter');
+				}
+			case 'yumi':
+				bf.visible = false;
+				if (!bf.visible)
+				{
+					yumi.visible = true;
+				}
+			case 'bat':
+				bf.visible = false;
+				if (!bf.visible)
+				{
+					bat.visible = true;
+				}
+			case 'yumi-right':
+				bf.visible = false;
+				if (!bf.visible)
+				{
+					yumi = new FlxSprite(0, 40);
+					yumi.visible = true;
 				}
 		}
 	}
