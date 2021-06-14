@@ -43,6 +43,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var dudes:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -220,6 +221,14 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
 
+		dudes = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+		add(dudes);
+		dudes.visible = false;
+		dudes.setGraphicSize(Std.int(dudes.width * 0.8));
+		dudes.updateHitbox();
+		dudes.screenCenter(X);
+		dudes.antialiasing = true;
+
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
 		FlxG.mouse.visible = false;
@@ -257,7 +266,8 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.F)
 		{
-			FlxG.fullscreen = !FlxG.fullscreen;
+			var text:FlxText = new FlxText(320, 360, 0, 'Press F to pay respect', 34);
+			add(text);
 		}
 
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
@@ -395,7 +405,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+				createCoolText(['aaronrocks40, r3m', 'JohnnyAnimates, wager.mp3', 'ChocoChurro, GreenLime', 'gedon6676, saqzar']);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
@@ -411,7 +421,7 @@ class TitleState extends MusicBeatState
 					createCoolText(['Kade Engine', 'by']);
 				else
 					createCoolText(['In Partnership', 'with']);
-			case 7:
+			case 6:
 				if (Main.watermarks)
 					addMoreText('KadeDeveloper');
 				else
@@ -419,7 +429,6 @@ class TitleState extends MusicBeatState
 					addMoreText('Newgrounds');
 					ngSpr.visible = true;
 				}
-			// credTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;
@@ -439,13 +448,13 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('Vs');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('Dreamland');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Dreamy Dream'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();
