@@ -443,18 +443,18 @@ class TitleState extends MusicBeatState
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
 			case 12:
+				addMoreText(curWacky[3]);
+			case 13:
 				deleteCoolText();
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
-			case 13:
+			case 14:
 				addMoreText('Vs');
 			// credTextShit.visible = true;
-			case 14:
+			case 15:
 				addMoreText('Dreamland');
 			// credTextShit.text += '\nNight';
-			case 15:
-				addMoreText('Dreamy Dream'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();
