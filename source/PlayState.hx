@@ -1688,30 +1688,11 @@ class PlayState extends MusicBeatState
 
 		if (smash == true)
 		{
-			var warn:FlxSprite = new FlxSprite(340, 360).loadGraphic(Paths.image('week54prototype', 'shared'));
-			add(warn);
-			trace('1');
-			trace('2');
-			trace('3');
-			remove(warn);
-			if (!FlxG.keys.justPressed.SPACE)
-			{
-				FlxG.camera.shake(0.005);
-				FlxG.camera.flash(FlxColor.WHITE, 0.7);
-				health -= 0.20;
-				boyfriend.playAnim('singRIGHTmiss'); // dad.playAnim('smash');
-				smash = false;
-			}
-			else
-			{
-				var text:FlxText = new FlxText(320, 360, 0, 'Nice!!!', 34);
-				add(text);
-				trace('1');
-				trace('2');
-				trace('3');
-				remove(text);
-			}
-
+			FlxG.camera.shake(0.005);
+			FlxG.camera.flash(FlxColor.WHITE, 0.7);
+			health -= 0.20;
+			boyfriend.playAnim('singRIGHTmiss'); // dad.playAnim('smash');
+			smash = false;
 		}
 
 		if (!FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
