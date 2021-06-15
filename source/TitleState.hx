@@ -164,11 +164,12 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
-		logoBl = new FlxSprite(-150, -100);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl = new FlxSprite(-75, -50);
+		logoBl.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
+		logoBl.scale.set(0.8, 0.8);
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -396,9 +397,15 @@ class TitleState extends MusicBeatState
 		danceLeft = !danceLeft;
 
 		if (danceLeft)
+		{
 			gfDance.animation.play('danceRight');
+			FlxTween.tween(gfDance, { x: FlxG.width * 0.4, y: FlxG.height * 0.07 }, 1);
+		}
 		else
+		{
 			gfDance.animation.play('danceLeft');
+			FlxTween.tween(gfDance, { x: FlxG.width * 0.4, y: FlxG.height * 0.03 }, 1);
+		}
 
 		FlxG.log.add(curBeat);
 
