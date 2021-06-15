@@ -413,10 +413,6 @@ class TitleState extends MusicBeatState
 			// credTextShit.addText();
 			case 4:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
-			case 5:
 				if (Main.watermarks)
 					createCoolText(['Kade Engine', 'by']);
 				else
@@ -432,31 +428,32 @@ class TitleState extends MusicBeatState
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;
-			// credTextShit.visible = false;
-
-			// credTextShit.text = 'Shoutouts Tom Fulp';
-			// credTextShit.screenCenter();
-			case 9:
 				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
 			case 11:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
 			case 12:
-				addMoreText(curWacky[3]);
-			case 13:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
+				createCoolText(['Sleep bf']);
+			case 13:
+				addMoreText('Sleep');
 			case 14:
+				deleteCoolText();
+				createCoolText(['Dream']);
+			case 15:
+				addMoreText('Is not speedrunner');
+			case 16:
+				addMoreText('Trust me');
+			case 17:
+				deleteCoolText();
 				addMoreText('Vs');
 			// credTextShit.visible = true;
-			case 15:
+			case 18:
 				addMoreText('Dreamland');
 			// credTextShit.text += '\nNight';
 
-			case 16:
+			case 19:
 				skipIntro();
 		}
 	}
