@@ -146,6 +146,26 @@ class DownscrollOption extends Option
 		return FlxG.save.data.downscroll ? "Downscroll" : "Upscroll";
 	}
 }
+class MiddlescrollOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return FlxG.save.data.middlescroll ? "Middle scroll" : "Default scroll";
+	}
+}
 
 class GhostTapOption extends Option
 {
@@ -225,6 +245,61 @@ class DistractionsAndEffectsOption extends Option
 	private override function updateDisplay():String
 	{
 		return "Distractions " + (!FlxG.save.data.distractions ? "off" : "on");
+	}
+}
+
+class Anliasting extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.anliasting = !FlxG.save.data.anliasting;
+		display = updateDisplay();
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "Anliasting " + (!FlxG.save.data.anliasting ? "off" : "on");
+	}
+}
+class UltraOptimizate extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.anliasting = !FlxG.save.data.anliasting;
+		display = updateDisplay();
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "Optimization: " + (!FlxG.save.data.optimization ? "off" : "on");
+	}
+}
+class Pixel extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
+		display = updateDisplay();
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "Pixel Notes: " + (!FlxG.save.data.pixelNotes ? "off" : "on");
+	}
+}
+
+class BG extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.bgHigh = !FlxG.save.data.bgHigh;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Graphic quality: " + (FlxG.save.data.bgHigh ? "High" : "Low");
 	}
 }
 
