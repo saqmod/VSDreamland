@@ -37,6 +37,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var gameVer:String = "0.2.7.1";
 	public static var modVer:String = "INDEV";
+	public static var kadeEngineVer:String = "THIS IS CUSTOM BUILD LMAO";
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -55,12 +56,6 @@ class MainMenuState extends MusicBeatState
 		}
 
 		persistentUpdate = persistentDraw = true;
-
-		var gfSleep:FlxSprite = new FlxSprite(200, -400);
-		gfSleep.frames = Paths.image('sleepygf');
-		gfSleep.animation.add('sleep', 'GF Dancing Beat');
-		gfSleep.animation.play('sleep');
-		add(gfSleep);
 
 		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('bgMenuNight'));
 		bg.scrollFactor.x = 0;

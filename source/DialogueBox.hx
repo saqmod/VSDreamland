@@ -32,7 +32,8 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitRight:FlxSprite;
 	var bf:FlxSprite;
 	var yumi:FlxSprite;
-	var bat:FlxSprite;
+	var yumiHapp:FlxSprite;
+	var yumiSad:FlxSprite;
 
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
@@ -90,11 +91,13 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
-			case 'Song One' | 'Song Two' | 'Song Three':
+			if(curCharacter.startsWith('yumi'))
+			{
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-				box.animation.addByIndices('normal', 'Speech Bubble Normal', [4], "", 24);
+				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil');
+				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
+				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
+			}
 		}
 
 		this.dialogueList = dialogueList;
@@ -128,18 +131,28 @@ class DialogueBox extends FlxSpriteGroup
 		bf.visible = false;
 
 		yumi = new FlxSprite(-20, 40);
-		yumi.frames = Paths.getSparrowAtlas('yumiPortrait', 'shared');
+		yumi.frames = Paths.getSparrowAtlas('yumi-pon', 'shared');
+		yumi.animation.addByPrefix('port', 'yumi-pon', 24, false);
 		yumi.updateHitbox();
 		yumi.scrollFactor.set();
 		add(yumi);
 		yumi.visible = false;
 
-		bat = new FlxSprite(-20, 40);
-		bat.frames = Paths.getSparrowAtlas('batPortrait', 'shared');
-		bat.updateHitbox();
-		bat.scrollFactor.set();
-		add(bat);
-		bat.visible = false;
+		yumiHapp = new FlxSprite(-20, 40);
+		yumiHapp.frames = Paths.getSparrowAtlas('yumi-pon-happy', 'shared');
+		yumiHapp.animation.addByPrefix('port', 'yumi-pon happy', 24, false);
+		yumiHapp.updateHitbox();
+		yumiHapp.scrollFactor.set();
+		add(yumiHapp);
+		yumiHapp.visible = false;
+
+		yumiSad = new FlxSprite(-20, 40);
+		yumiSad.frames = Paths.getSparrowAtlas('yumi-pon-worried', 'shared');
+		yumiSad.animation.addByPrefix('port', 'yumi-pon worried', 24, false);
+		yumiSad.updateHitbox();
+		yumiSad.scrollFactor.set();
+		add(yumiSad);
+		yumiSad.visible = false;
 		
 		box.animation.play('normalOpen');
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
@@ -184,7 +197,7 @@ class DialogueBox extends FlxSpriteGroup
 			portraitLeft.visible = false;
 		if (PlayState.SONG.song.toLowerCase() == 'thorns')
 		{
-			portraitLeft.color = FlxColor.BLACK;
+			portraitLeft.visible = false;
 			swagDialogue.color = FlxColor.WHITE;
 			dropText.color = FlxColor.BLACK;
 		}
@@ -282,19 +295,21 @@ class DialogueBox extends FlxSpriteGroup
 				if (!bf.visible)
 				{
 					yumi.visible = true;
+					yumi.animation.play('port');
 				}
-			case 'bat':
+			case 'yumi-happy':
 				bf.visible = false;
 				if (!bf.visible)
 				{
-					bat.visible = true;
+					yumiHapp.visible = true;
+					yumiHapp.animation.play('port');
 				}
-			case 'yumi-right':
+			case 'yumi-worried':
 				bf.visible = false;
 				if (!bf.visible)
 				{
-					yumi = new FlxSprite(0, 40);
-					yumi.visible = true;
+					yumiSad.visible = true;
+					yumiSad.animation.play('port');
 				}
 		}
 	}

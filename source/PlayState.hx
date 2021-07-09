@@ -1599,8 +1599,14 @@ class PlayState extends MusicBeatState
 			//defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
 		
-			if (FlxG.save.data.optimization && player == 0)
-				continue;
+			if (FlxG.save.data.pixelNotes)
+			{
+				noteTypeCheck == 'pixel';
+			}
+			else
+			{
+				noteTypeCheck == 'normal';
+			}
 
 			if (SONG.noteStyle == null) {
 				switch(storyWeek) {case 6: noteTypeCheck = 'pixel';}
@@ -1832,16 +1838,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.optimization)
 		{
-			!FlxG.save.data.pixelNotes = FlxG.save.data.pixelNotes;
-		}
-
-		if (FlxG.save.data.pixelNotes)
-		{
-			noteTypeCheck == 'pixel';
-		}
-		else
-		{
-			noteTypeCheck == 'normal';
+			FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
 		}
 
 		if (smash == true)
@@ -2010,7 +2007,7 @@ class PlayState extends MusicBeatState
 			health = 2;
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
-			if (dad.curCharacter == 'yumi')
+			if (dad.curCharacter == 'yumi' || dad.curCharacter == 'gf' || dad.curCharacter == 'gf-christmas' || dad.curCharacter == 'gf-car')
 			{
 				iconP2.animation.curAnim.curFrame = 1;
 			}

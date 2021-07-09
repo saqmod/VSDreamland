@@ -212,6 +212,27 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
+			case 'yumi':
+				tex = Paths.getSparrowAtlas('characters/yumi', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'yumi idle PON', 24, false);
+				animation.addByPrefix('singUP', 'yumi up PON', 24, false);
+				animation.addByPrefix('singDOWN', 'yumi down PON', 24, false);
+				animation.addByPrefix('singLEFT', 'yumi left PON', 24, false);
+				animation.addByPrefix('singRIGHT', 'yumi right PON', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", -6, 50);
+				addOffset("singRIGHT", 0, 27);
+				addOffset("singLEFT", -10, 10);
+				addOffset("singDOWN", 0, -30);
+
+				playAnim('idle');
+				trace('cute girl is selected');
+			case 'bat':
+				trace('this is not cute');
+			case 'bat-evil':
+				trace('THIS IS 100% IS NOT CUTE');
 			case 'monster-christmas':
 				tex = Paths.getSparrowAtlas('characters/monsterChristmas');
 				frames = tex;
