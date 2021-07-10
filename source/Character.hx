@@ -221,11 +221,11 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'yumi left PON', 24, false);
 				animation.addByPrefix('singRIGHT', 'yumi right PON', 24, false);
 
-				addOffset('idle');
-				addOffset("singUP", -6, 50);
-				addOffset("singRIGHT", 0, 27);
-				addOffset("singLEFT", -10, 10);
-				addOffset("singDOWN", 0, -30);
+				addOffset('idle', 0, -160);
+				addOffset("singUP", 15, -149);
+				addOffset("singRIGHT", -44, -179);
+				addOffset("singLEFT", 14, -149);
+				addOffset("singDOWN", -49, -199);
 
 				playAnim('idle');
 				trace('cute girl is selected');
