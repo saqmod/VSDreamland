@@ -78,8 +78,8 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 	public static var weekSong:Int = 0;
-	public static var shits:Int = 0;
-	public static var bads:Int = 0;
+	public static var uhhs:Int = 0;
+	public static var oks:Int = 0;
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 
@@ -94,7 +94,7 @@ class PlayState extends MusicBeatState
 	var halloweenLevel:Bool = false;
 
 	var songLength:Float = 0;
-	var kadeEngineWatermark:FlxText;
+	var dreamlandWatermark:FlxText;
 	
 	#if windows
 	// Discord RPC variables
@@ -184,6 +184,7 @@ class PlayState extends MusicBeatState
 	var songScore:Int = 0;
 	var songScoreDef:Int = 0;
 	var scoreTxt:FlxText;
+	var infoTxt:FlxText;
 	var replayTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
@@ -223,6 +224,8 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		FlxG.save.data.bgHigh = true;
+
 		instance = this;
 		
 		if (FlxG.save.data.fpsCap > 290)
@@ -232,8 +235,8 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.stop();
 
 		sicks = 0;
-		bads = 0;
-		shits = 0;
+		oks = 0;
+		uhhs = 0;
 		goods = 0;
 
 		misses = 0;
@@ -1029,7 +1032,7 @@ class PlayState extends MusicBeatState
 				songPosBar = new FlxBar(songPosBG.x + 4, songPosBG.y + 4, LEFT_TO_RIGHT, Std.int(songPosBG.width - 8), Std.int(songPosBG.height - 8), this,
 					'songPositionBar', 0, 90000);
 				songPosBar.scrollFactor.set();
-				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+				songPosBar.createFilledBar(FlxColor.GRAY, FlxColor.CYAN);
 				add(songPosBar);
 	
 				var songName = new FlxText(songPosBG.x + (songPosBG.width / 2) - 20,songPosBG.y,0,SONG.song, 16);
@@ -1055,14 +1058,14 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - KE " + MainMenuState.kadeEngineVer : ""), 16);
-		kadeEngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		kadeEngineWatermark.scrollFactor.set();
-		add(kadeEngineWatermark);
+		// Add Dreamland watermark
+		dreamlandWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - Dreamland " + MainMenuState.modVer : ""), 16);
+		dreamlandWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		dreamlandWatermark.scrollFactor.set();
+		// add(dreamlandWatermark); -- fuck the watermark
 
 		if (FlxG.save.data.downscroll)
-			kadeEngineWatermark.y = FlxG.height * 0.9 + 45;
+			dreamlandWatermark.y = FlxG.height * 0.9 + 45;
 
 		scoreTxt = new FlxText(FlxG.width / 2 - 235, healthBarBG.y + 50, 0, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
@@ -1073,6 +1076,8 @@ class PlayState extends MusicBeatState
 			scoreTxt.x += 300;
 		if(FlxG.save.data.botplay) scoreTxt.x = FlxG.width / 2 - 20;													  
 		add(scoreTxt);
+		infoTxt = new FlxText(healthBarBG.x - healthBarBG.width/2, healthBarBG.y + 26, 0, "", 20);
+		add(infoTxt);
 
 		replayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "REPLAY", 20);
 		replayTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1109,7 +1114,7 @@ class PlayState extends MusicBeatState
 			songPosBG.cameras = [camHUD];
 			songPosBar.cameras = [camHUD];
 		}
-		kadeEngineWatermark.cameras = [camHUD];
+		dreamlandWatermark.cameras = [camHUD];
 		if (loadRep)
 			replayTxt.cameras = [camHUD];
 
@@ -1539,9 +1544,6 @@ class PlayState extends MusicBeatState
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
-				if (!gottaHitNote && FlxG.save.data.middlescroll)
-					continue;
-
 				var susLength:Float = swagNote.sustainLength;
 
 				susLength = susLength / Conductor.stepCrochet;
@@ -1742,8 +1744,10 @@ class PlayState extends MusicBeatState
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
 
-			if (FlxG.save.data.middlescroll)
-				babyArrow.x -= 275;
+			if (FlxG.save.data.middlescroll){
+				babyArrow.x -= 275; }
+			else {
+				trace('No middlescroll'); }
 			
 			cpuStrums.forEach(function(spr:FlxSprite)
 			{					
@@ -1828,6 +1832,12 @@ class PlayState extends MusicBeatState
 	var nps:Int = 0;
 	var maxNPS:Int = 0;
 
+	function realRussianMemes()
+	{
+		trace('Обьясни свою маленькость');
+		trace('А я думал тут будет водка ну ок');
+	}
+
 	public static var songRate = 1.5;
 
 	override public function update(elapsed:Float)
@@ -1883,7 +1893,7 @@ class PlayState extends MusicBeatState
 			if (luaModchart.getVar("showOnlyStrums",'bool'))
 			{
 				healthBarBG.visible = false;
-				kadeEngineWatermark.visible = false;
+				dreamlandWatermark.visible = false;
 				healthBar.visible = false;
 				iconP1.visible = false;
 				iconP2.visible = false;
@@ -1892,7 +1902,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				healthBarBG.visible = true;
-				kadeEngineWatermark.visible = true;
+				dreamlandWatermark.visible = true;
 				healthBar.visible = true;
 				iconP1.visible = true;
 				iconP2.visible = true;
@@ -1958,6 +1968,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,maxNPS,accuracy);
+		infoTxt.text = "Sicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs; 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -2007,26 +2018,23 @@ class PlayState extends MusicBeatState
 			health = 2;
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
-			if (dad.curCharacter == 'yumi' || dad.curCharacter == 'gf' || dad.curCharacter == 'gf-christmas' || dad.curCharacter == 'gf-car')
-			{
-				iconP2.animation.curAnim.curFrame = 1;
-			}
+		else if (healthBar.percent > 80)
+			iconP2.animation.curAnim.curFrame = 2; 
 		else
 			iconP1.animation.curAnim.curFrame = 0;
+			iconP2.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
-			if (dad.curCharacter == 'yumi')
-			{
-				iconP2.animation.curAnim.curFrame = 2;
-			}
+		else if (healthBar.percent < 20)
+			iconP2.animation.curAnim.curFrame = 1; 
 		else
 			iconP2.animation.curAnim.curFrame = 0;
+			iconP1.animation.curAnim.curFrame = 0;
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
-		#if dev
 		if (FlxG.keys.justPressed.EIGHT)
 		{
 			FlxG.switchState(new AnimationDebug(SONG.player2));
@@ -2050,8 +2058,6 @@ class PlayState extends MusicBeatState
 			}
 			#end
 		}
-
-		#end
 
 		if (startingSong)
 		{
@@ -2221,6 +2227,8 @@ class PlayState extends MusicBeatState
 					case 'senpai-angry':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
+					case 'yumi':
+						camFollow.y = dad.getMidpoint().y - 120;
 				}
 
 				if (dad.curCharacter == 'mom')
@@ -2627,11 +2635,10 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-
 					transIn = FlxTransitionableState.defaultTransIn;
 					transOut = FlxTransitionableState.defaultTransOut;
 
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					FlxG.switchState(new StoryMenuState());
 
 					#if windows
@@ -2691,6 +2698,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				trace('WENT BACK TO FREEPLAY??');
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				FlxG.switchState(new FreeplayState());
 			}
 		}
@@ -2731,21 +2739,20 @@ class PlayState extends MusicBeatState
 
 			switch(daRating)
 			{
-				case 'shit':
+				case 'uhh':
 					score = -300;
 					combo = 0;
 					misses++;
 					health -= 0.2;
 					ss = false;
-					shits++;
+					uhhs++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.25;
-				case 'bad':
-					daRating = 'bad';
-					score = 0;
-					health -= 0.06;
+				case 'ok':
+					daRating = 'ok';
+					score = 75;
 					ss = false;
-					bads++;
+					oks++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.50;
 				case 'good':
@@ -2815,9 +2822,9 @@ class PlayState extends MusicBeatState
 			timeShown = 0;
 			switch(daRating)
 			{
-				case 'shit' | 'bad':
+				case 'uhh':
 					currentTimingShown.color = FlxColor.RED;
-				case 'good':
+				case 'good' | 'ok':
 					currentTimingShown.color = FlxColor.GREEN;
 				case 'sick':
 					currentTimingShown.color = FlxColor.CYAN;

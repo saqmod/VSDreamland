@@ -8,9 +8,9 @@ class Ratings
 		if(FlxG.save.data.botplay)
 			ranking = "BotPlay";
 
-        if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
+        if (PlayState.misses == 0 && PlayState.oks == 0 && PlayState.uhhs == 0 && PlayState.goods == 0) // Marvelous (SICK) Full Combo
             ranking = "(MFC)";
-        else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
+        else if (PlayState.misses == 0 && PlayState.oks == 0 && PlayState.uhhs == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
             ranking = "(GFC)";
         else if (PlayState.misses == 0) // Regular FC
             ranking = "(FC)";
@@ -113,17 +113,17 @@ class Ratings
         if (noteDiff > 166 * customTimeScale) // so god damn early its a miss
             return "miss";
         if (noteDiff > 135 * customTimeScale) // way early
-            return "shit";
+            return "uhh";
         else if (noteDiff > 90 * customTimeScale) // early
-            return "bad";
+            return "ok";
         else if (noteDiff > 45 * customTimeScale) // your kinda there
             return "good";
         else if (noteDiff < -45 * customTimeScale) // little late
             return "good";
         else if (noteDiff < -90 * customTimeScale) // late
-            return "bad";
+            return "ok";
         else if (noteDiff < -135 * customTimeScale) // late as fuck
-            return "shit";
+            return "uh";
         else if (noteDiff < -166 * customTimeScale) // so god damn late its a miss
             return "miss";
         return "sick";

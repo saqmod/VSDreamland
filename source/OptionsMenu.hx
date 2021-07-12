@@ -25,7 +25,6 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
-			new MiddlescrollOption("Notes in the middle of the screen or default."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
 			#if desktop
@@ -39,6 +38,8 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Appearance", [
 			#if desktop
+			new Fullscreen(),
+			new ResultsScreen("Show your results on end of song or week"),
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
@@ -57,15 +58,9 @@ class OptionsMenu extends MusicBeatState
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new BotPlay("Showcase your charts and mods with autoplay.")
-		]),
-		new OptionCategory("Graphics", [
-			new Anliasting(),
-			new BG(),
-			new Pixel(),
-			new UltraOptimizate()
+			new BotPlay("Showcase your charts and mods with autoplay."),
+			new Pixel()
 		])
-		
 	];
 
 	private var currentDescription:String = "";
