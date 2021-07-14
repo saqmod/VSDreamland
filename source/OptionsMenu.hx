@@ -39,7 +39,6 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Appearance", [
 			#if desktop
 			new Fullscreen(),
-			new ResultsScreen("Show your results on end of song or week"),
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
