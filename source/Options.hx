@@ -164,7 +164,7 @@ class ResultsScreen extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Results Screen: " + (FlxG.save.data.scoreScreen ? "on" : "off");
+		return "Note Splashes: " + (FlxG.save.data.scoreScreen ? "on" : "off");
 	}
 }
 
