@@ -60,6 +60,11 @@ class Paths
 		return getPath('data/$key.lua', TEXT, library);
 	}
 
+	inline static public function script(key:String,?library:String)
+	{
+		return getPath('data/$key.dreamland', TEXT, library);
+	}
+
 	inline static public function luaImage(key:String, ?library:String)
 	{
 		return getPath('data/$key.png', IMAGE, library);

@@ -1077,6 +1077,8 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.botplay) scoreTxt.x = FlxG.width / 2 - 20;													  
 		add(scoreTxt);
 		infoTxt = new FlxText(healthBarBG.x - healthBarBG.width/2, healthBarBG.y + 26, 0, "", 20);
+		infoTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		infoTxt.scrollFactor.set();
 		add(infoTxt);
 
 		replayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "REPLAY", 20);
@@ -1389,6 +1391,10 @@ class PlayState extends MusicBeatState
 						}
 					});
 					FlxG.sound.play(Paths.sound('introGo' + altSuffix), 0.6);
+					if (gf.animOffsets.exists('cheer'))
+					{
+						gf.animation.play('cheer');
+					}
 				case 4:
 			}
 
@@ -1856,7 +1862,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.shake(0.005);
 			FlxG.camera.flash(FlxColor.WHITE, 0.7);
 			health -= 0.20;
-			boyfriend.playAnim('singRIGHTmiss'); // dad.playAnim('smash');
+			boyfriend.playAnim(Paths.script('smashAnim', 'shared')); // dad.playAnim('smash');
 			smash = false;
 		}
 
@@ -2018,14 +2024,12 @@ class PlayState extends MusicBeatState
 			health = 2;
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
-		else if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 2; 
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
+			iconP2.animation.curAnim.curFrame = 2;
 		else if (healthBar.percent < 20)
 			iconP2.animation.curAnim.curFrame = 1; 
 		else
@@ -2228,7 +2232,7 @@ class PlayState extends MusicBeatState
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
 					case 'yumi':
-						camFollow.y = dad.getMidpoint().y - 120;
+						camFollow.y = dad.getMidpoint().y - -70;
 				}
 
 				if (dad.curCharacter == 'mom')
@@ -2908,6 +2912,10 @@ class PlayState extends MusicBeatState
 			currentTimingShown.updateHitbox();
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
+	
+			currentTimingShown.cameras = [camHUD];
+			comboSpr.cameras = [camHUD];
+			rating.cameras = [camHUD];
 
 			var sploosh:FlxSprite = new FlxSprite(daNote.x, playerStrums.members[daNote.noteData].y);
 			if (!curStage.startsWith('school'))
@@ -2956,11 +2964,7 @@ class PlayState extends MusicBeatState
 					sploosh.offset.y += 80;
 					sploosh.animation.finishCallback = function(name) sploosh.kill();
 				}
-			}
-	
-			currentTimingShown.cameras = [camHUD];
-			comboSpr.cameras = [camHUD];
-			rating.cameras = [camHUD];
+			} // ahdddhdddhdjdhdjdddpssdufidsufpodiufoidsufpisdufiuodi i steal code from fnf mic'd upp (no fuck down) 
 
 			var seperatedScore:Array<Int> = [];
 	
@@ -3262,7 +3266,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			health -= 0.04;
+			health -= 0.20;
 			if (combo > 5 && gf.animOffsets.exists('sad'))
 			{
 				gf.playAnim('sad');
