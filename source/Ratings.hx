@@ -123,7 +123,7 @@ class Ratings
         else if (noteDiff < -90 * customTimeScale) // late
             return "ok";
         else if (noteDiff < -135 * customTimeScale) // late as fuck
-            return "uh";
+            return "uhh";
         else if (noteDiff < -166 * customTimeScale) // so god damn late its a miss
             return "miss";
         return "sick";
@@ -134,8 +134,8 @@ class Ratings
         return 
         (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + (!FlxG.save.data.botplay ? " | " : "") : "") + (!FlxG.save.data.botplay ?	// NPS Toggle
         "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + 									// Score
-        " | Combo Breaks:" + PlayState.misses + 																				// Misses/Combo Breaks
+        (FlxG.save.data.accuracyDisplay ? " | Misses:" + PlayState.misses + 																				// Misses/Combo Breaks
         " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// Accuracy
-        " | " + GenerateLetterRank(accuracy) : ""); 																			// Letter Rank
+        " | " + GenerateLetterRank(accuracy) : "") : ""); 																			// Letter Rank
     }
 }

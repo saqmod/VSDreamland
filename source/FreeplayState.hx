@@ -68,7 +68,11 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('parkDesat', 'dreamland'));
+		if (curSelected == 0)
+			bg.color = FlxColor.CYAN;
+		else if (curSelected == 1 || curSelected == 3)
+			bg.color = 0x88ff88;
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -80,6 +84,7 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
+			songText.screenCenter(X);
 
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;

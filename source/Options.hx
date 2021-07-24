@@ -86,20 +86,13 @@ class DFJKOption extends Option
 
 	public override function press():Bool
 	{
-		FlxG.save.data.dfjk = !FlxG.save.data.dfjk;
-		
-		if (FlxG.save.data.dfjk)
-			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
-		else
-			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
-
-		display = updateDisplay();
-		return true;
+		OptionsMenu.instance.openSubState(new KeyBindMenu());
+		return false;
 	}
 
 	private override function updateDisplay():String
 	{
-		return  FlxG.save.data.dfjk ? "DFJK" : "WASD";
+		return "Key Bindings";
 	}
 }
 
@@ -126,6 +119,120 @@ class CpuStrums extends Option
 
 }
 
+class ShowGF extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.showGf = !FlxG.save.data.showGf;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return FlxG.save.data.showGf ? "Show GF" : "Don't show GF";
+	}
+
+}
+
+class NoteSplashes extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.noteSplashes = !FlxG.save.data.noteSplashes;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Note splashes ' + (FlxG.save.data.noteSplashes ? "on" : "off");
+	}
+
+}
+
+class InfoText extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.infoTxt = !FlxG.save.data.infoTxt;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Information ' + (FlxG.save.data.infoTxt ? "on" : "off");
+	}
+
+}
+
+class AltPause extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.altPause = !FlxG.save.data.altPause;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Alt Pause Menu " + (!FlxG.save.data.altPause ? "off" : 'on');
+	}
+}
+
+class MenuOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.liteMenu = !FlxG.save.data.liteMenu;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Lite menu ' + (!FlxG.save.data.liteMenu ? "off" : "on");
+	}
+
+}
+
 class DownscrollOption extends Option
 {
 	public function new(desc:String)
@@ -144,27 +251,6 @@ class DownscrollOption extends Option
 	private override function updateDisplay():String
 	{
 		return FlxG.save.data.downscroll ? "Downscroll" : "Upscroll";
-	}
-}
-
-class ResultsScreen extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		FlxG.save.data.scoreScreen = !FlxG.save.data.scoreScreen;
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "Note Splashes: " + (FlxG.save.data.scoreScreen ? "on" : "off");
 	}
 }
 
@@ -246,33 +332,6 @@ class DistractionsAndEffectsOption extends Option
 	private override function updateDisplay():String
 	{
 		return "Distractions " + (!FlxG.save.data.distractions ? "off" : "on");
-	}
-}
-
-class Pixel extends Option
-{
-	public override function press():Bool
-	{
-		FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
-		display = updateDisplay();
-		return true;
-	}
-	private override function updateDisplay():String
-	{
-		return "Pixel Notes: " + (!FlxG.save.data.pixelNotes ? "off" : "on");
-	}
-}
-class Fullscreen extends Option
-{
-	public override function press():Bool
-	{
-		FlxG.fullscreen = !FlxG.fullscreen;
-		display = updateDisplay();
-		return true;
-	}
-	private override function updateDisplay():String
-	{
-		return "Fullscreen: " + (!FlxG.fullscreen ? "off" : "on");
 	}
 }
 
@@ -471,8 +530,8 @@ class ScrollSpeedOption extends Option
 		if (FlxG.save.data.scrollSpeed < 1)
 			FlxG.save.data.scrollSpeed = 1;
 
-		if (FlxG.save.data.scrollSpeed > 10)
-			FlxG.save.data.scrollSpeed = 10;
+		if (FlxG.save.data.scrollSpeed > 4)
+			FlxG.save.data.scrollSpeed = 4;
 		return true;
 	}
 
@@ -486,8 +545,8 @@ class ScrollSpeedOption extends Option
 		if (FlxG.save.data.scrollSpeed < 1)
 			FlxG.save.data.scrollSpeed = 1;
 
-		if (FlxG.save.data.scrollSpeed > 10)
-			FlxG.save.data.scrollSpeed = 10;
+		if (FlxG.save.data.scrollSpeed > 4)
+			FlxG.save.data.scrollSpeed = 4;
 
 		return true;
 	}

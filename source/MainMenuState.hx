@@ -27,7 +27,9 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'options'];
+	var yumiOrbat:FlxSprite;
+
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'options'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -37,7 +39,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var gameVer:String = "0.2.7.1";
 	public static var modVer:String = "INDEV";
-	public static var kadeEngineVer:String = "THIS IS CUSTOM BUILD LMAO";
+	public static var kadeEngineVer:String = "CUSTOM BUILD";
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -57,7 +59,11 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('bgMenuNight'));
+		var bg:FlxSprite;
+		if (!FlxG.save.data.liteMenu)
+			bg = new FlxSprite(-100).loadGraphic(Paths.image('blue', 'dreamland'));
+		else
+			bg = new FlxSprite(-100).loadGraphic(Paths.image('parkYellow', 'dreamland'));			
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.10;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -69,7 +75,10 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('bgMenuNight'));
+		if (!FlxG.save.data.liteMenu)
+			magenta = new FlxSprite(-100).loadGraphic(Paths.image('blue', 'dreamland'));
+		else
+			magenta = new FlxSprite(-100).loadGraphic(Paths.image('parkMagenta', 'dreamland'));	
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.10;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
@@ -77,7 +86,6 @@ class MainMenuState extends MusicBeatState
 		magenta.screenCenter();
 		magenta.visible = false;
 		magenta.antialiasing = true;
-		magenta.color = 0xFFfd719b;
 		add(magenta);
 		// magenta.scrollFactor.set();
 
@@ -95,6 +103,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
+			menuItem.y += 5;
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
@@ -106,12 +115,13 @@ class MainMenuState extends MusicBeatState
 			else
 				menuItem.y = 60 + (i * 160);
 		}
+	
 
 		firstStart = false;
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 29, 0, gameVer +  (Main.watermarks ? " FNF - " + "KE CUSTOM BUILD" + " (VS. Dreamland " + modVer + ")": ""), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 29, 0, gameVer + " FNF - " + "KE CUSTOM BUILD" + (Main.watermarks ? " (VS. Dreamland " + modVer + ")": ""), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -230,7 +240,8 @@ class MainMenuState extends MusicBeatState
 				FlxG.switchState(new FreeplayState());
 
 				trace("Freeplay Menu Selected");
-
+			case 'credits':
+				FlxG.switchState(new CreditsState());
 			case 'options':
 				FlxG.switchState(new OptionsMenu());
 		}

@@ -18,6 +18,8 @@ import lime.utils.Assets;
 
 class OptionsMenu extends MusicBeatState
 {
+	public static var instance:OptionsMenu;
+
 	var selector:FlxText;
 	var curSelected:Int = 0;
 
@@ -38,7 +40,6 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Appearance", [
 			#if desktop
-			new Fullscreen(),
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
@@ -56,11 +57,21 @@ class OptionsMenu extends MusicBeatState
 			new ReplayOption("View replays"),
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
-			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new BotPlay("Showcase your charts and mods with autoplay."),
-			new Pixel()
+			new WatermarkOption("Enable and disable dreamland watermarks."),
+			new BotPlay("Showcase your charts and mods with autoplay.")
+		]),
+
+		new OptionCategory("Custom", [
+			new NoteSplashes("Show note splashes"),
+			new ShowGF("Show Girlfriend in game"),
+			new MenuOption("Lite menu | Classic menu"),
+			new InfoText("Information"),
+			new AltPause("Alternative (Secret) Pause in 100% chance")
 		])
+		
 	];
+
+	public var acceptInput:Bool = true;
 
 	private var currentDescription:String = "";
 	private var grpControls:FlxTypedGroup<Alphabet>;
@@ -70,6 +81,7 @@ class OptionsMenu extends MusicBeatState
 	var blackBorder:FlxSprite;
 	override function create()
 	{
+		instance = this;
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 
 		menuBG.color = 0xFFea71fd;
@@ -117,6 +129,8 @@ class OptionsMenu extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		if (acceptInput)
+		{
 			if (controls.BACK && !isCat)
 				FlxG.switchState(new MainMenuState());
 			else if (controls.BACK)
@@ -226,6 +240,7 @@ class OptionsMenu extends MusicBeatState
 					curSelected = 0;
 				}
 			}
+		}
 		FlxG.save.flush();
 	}
 

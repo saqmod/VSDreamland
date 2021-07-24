@@ -35,6 +35,10 @@ class DialogueBox extends FlxSpriteGroup
 	var yumiHapp:FlxSprite;
 	var yumiSad:FlxSprite;
 
+	var curBubble:String;
+	var curAnim:String;
+	var cutsceneImage:FlxSprite;
+
 	var handSelect:FlxSprite;
 	var bgFade:FlxSprite;
 
@@ -57,6 +61,10 @@ class DialogueBox extends FlxSpriteGroup
 		bgFade.alpha = 0;
 		add(bgFade);
 
+		var cutsceneImage:FlxSprite = new FlxSprite(0, 0);
+		cutsceneImage.visible = false;
+		add(cutsceneImage);	
+
 		new FlxTimer().start(0.83, function(tmr:FlxTimer)
 		{
 			bgFade.alpha += (1 / 5) * 0.7;
@@ -64,44 +72,26 @@ class DialogueBox extends FlxSpriteGroup
 				bgFade.alpha = 0.7;
 		}, 5);
 
-		box = new FlxSprite(-20, 45);
+		box = new FlxSprite(-20, -400);
 		
 		var hasDialog = false;
+
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai':
+			case 'senpai' | 'roses':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel');
-				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
-			case 'roses':
-				hasDialog = true;
-				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
-
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-senpaiMad');
-				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
-				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
-
+				box.frames = Paths.getSparrowAtlas('yumi-text-box', 'shared');
+				box.animation.addByPrefix('normalOpen', 'yumi text box', 24, false);
+				box.animation.addByIndices('normal', 'yumi text box', [8], "", 24);
 			case 'thorns':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil');
-				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
-
-				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward'));
-				face.setGraphicSize(Std.int(face.width * 6));
-				add(face);
-			if(curCharacter.startsWith('yumi'))
-			{
-				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil');
-				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
-			}
+				box.frames = Paths.getSparrowAtlas('yumi-text-box', 'shared');
+				box.animation.addByPrefix('normalOpen', 'yumi text box', 24, false);
+				box.animation.addByIndices('normal', 'yumi text box', [8], "", 24);
 		}
 
-		this.dialogueList = dialogueList;
-		
+		this.dialogueList = dialogueList;	
+
 		if (!hasDialog)
 			return;
 		
@@ -155,7 +145,6 @@ class DialogueBox extends FlxSpriteGroup
 		yumiSad.visible = false;
 		
 		box.animation.play('normalOpen');
-		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		box.updateHitbox();
 		add(box);
 
@@ -285,31 +274,44 @@ class DialogueBox extends FlxSpriteGroup
 				}
 			case 'bf':
 				portraitLeft.visible = false;
-				if (!portraitRight.visible)
-				{
-					portraitRight.visible = true;
-					portraitRight.animation.play('enter');
+				switch(curAnim) {
+					case 'pixel':
+						portraitRight.visible = true;
+						portraitRight.animation.play('enter');
 				}
+			case 'bg':
+				switch(curAnim){
+					case "hide":
+						cutsceneImage.visible = false;
+					default:
+						cutsceneImage.visible = true;
+						cutsceneImage.loadGraphic(Paths.image("cutscenes/" + curAnim, 'chared'));
+				}
+			case 'box':
+				switch(curAnim){
+					case 'hide':
+						box.visible = false;
+					case 'show':
+						box.visible = true;
+				}				
 			case 'yumi':
 				bf.visible = false;
-				if (!bf.visible)
-				{
-					yumi.visible = true;
-					yumi.animation.play('port');
-				}
-			case 'yumi-happy':
-				bf.visible = false;
-				if (!bf.visible)
-				{
-					yumiHapp.visible = true;
-					yumiHapp.animation.play('port');
-				}
-			case 'yumi-worried':
-				bf.visible = false;
-				if (!bf.visible)
-				{
-					yumiSad.visible = true;
-					yumiSad.animation.play('port');
+				switch(curAnim){
+					case 'happy':
+						yumiHapp.visible = true;
+						yumi.visible = false;
+						yumiSad.visible = false;
+						yumiHapp.animation.play('port');	
+					case 'worried':
+						yumiSad.visible = true;
+						yumi.visible = false;
+						yumiHapp.visible = false;
+						yumiSad.animation.play('port');
+					case 'normal':
+						yumi.visible = true;
+						yumiHapp.visible = false;
+						yumiSad.visible = false;
+						yumi.animation.play('port');
 				}
 		}
 	}
@@ -318,6 +320,8 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
+		curAnim = splitName[2];
 		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
+		dialogueList[0] = dialogueList[0].substr(splitName[2].length + 2).trim();
 	}
 }

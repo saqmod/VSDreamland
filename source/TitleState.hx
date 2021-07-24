@@ -43,6 +43,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var gedonLogo:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -157,7 +158,7 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('bgMenuDay'));
+		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('bgMenuDay', 'dreamland'));
 		bg.antialiasing = true;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
@@ -165,7 +166,7 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite(-150, 0);
-		logoBl.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin');
+		logoBl.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
@@ -179,9 +180,10 @@ class TitleState extends MusicBeatState
 		gfDance.animation.addByPrefix('dance', 'GF Dancing Beat', 24);
 		gfDance.antialiasing = true;
 		add(logoBl);
+		// add(gfDance);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
-		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		titleText.frames = Paths.getSparrowAtlas('press_start_menu', 'dreamland');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;
@@ -212,13 +214,13 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
+		gedonLogo = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('daOneIdiot', 'dreamland'));
+		add(gedonLogo);
+		gedonLogo.visible = false;
+		gedonLogo.setGraphicSize(Std.int(gedonLogo.width * 0.8));
+		gedonLogo.updateHitbox();
+		gedonLogo.screenCenter(X);
+		gedonLogo.antialiasing = true;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -347,6 +349,9 @@ class TitleState extends MusicBeatState
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
 			textGroup.add(money);
+
+			FlxTween.tween(money, {y: money.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+			FlxTween.tween(money, {x: money.x + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		}
 	}
 
@@ -357,6 +362,9 @@ class TitleState extends MusicBeatState
 		coolText.y += (textGroup.length * 60) + 200;
 		credGroup.add(coolText);
 		textGroup.add(coolText);
+
+		FlxTween.tween(coolText, {y: coolText.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+		FlxTween.tween(coolText, {x: coolText.x + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 	}
 
 	function deleteCoolText()
@@ -381,34 +389,38 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['A lot of people']);
+				createCoolText(['Dreamland Devs']);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
+				// manyIdiots.visible = true;
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
 			case 4:
 				deleteCoolText();
+				var fol = false;
+				// manyIdiots.visible = fol;
 			// credTextShit.visible = false;
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
 				createCoolText(['Using KadeDev engine']);
 			case 7:
-				addMoreText('But GEDON6676\ncustom build');
+				addMoreText('But GEDON6676 custom build');
+				gedonLogo.visible = true;
 			// credTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
-				ngSpr.visible = false;
+				gedonLogo.visible = false;
 			// credTextShit.visible = false;
 
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
 			case 9:
-				createCoolText([curWacky[0]]);
+				createCoolText(['Pico funni']);
 			// credTextShit.visible = true;
 			case 11:
-				addMoreText(curWacky[1]);
+				addMoreText('pico funni');
 			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();

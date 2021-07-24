@@ -213,7 +213,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
 			case 'yumi':
-				tex = Paths.getSparrowAtlas('characters/yumi', 'shared');
+				tex = Paths.getSparrowAtlas('characters/yumi', 'dreamland');
 				frames = tex;
 				animation.addByPrefix('idle', 'yumi idle PON', 24, false);
 				animation.addByPrefix('singUP', 'yumi up PON', 24, false);
@@ -221,11 +221,11 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'yumi left PON', 24, false);
 				animation.addByPrefix('singRIGHT', 'yumi right PON', 24, false);
 
-				addOffset('idle', 0, -160);
-				addOffset("singUP", 15, -149);
-				addOffset("singRIGHT", -44, -179);
-				addOffset("singLEFT", 14, -149);
-				addOffset("singDOWN", -49, -199);
+				addOffset('idle', 0, -200);
+				addOffset("singUP", 15, -189);
+				addOffset("singRIGHT", -44, -219);
+				addOffset("singLEFT", 14, -189);
+				addOffset("singDOWN", -49, -239);
 
 				playAnim('idle');
 				trace('cute girl is selected');
@@ -572,6 +572,8 @@ class Character extends FlxSprite
 
 		super.update(elapsed);
 	}
+
+
 
 	private var danced:Bool = false;
 

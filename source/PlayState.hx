@@ -71,6 +71,8 @@ class PlayState extends MusicBeatState
 {
 	public static var instance:PlayState = null;
 
+	public static var blubolls:Int = 0;
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -866,6 +868,10 @@ class PlayState extends MusicBeatState
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
+		if (FlxG.save.data.showGf)
+			gf.visible = true;
+		else
+			gf.visible = false;
 
 		dad = new Character(100, 100, SONG.player2);
 
@@ -1076,10 +1082,12 @@ class PlayState extends MusicBeatState
 			scoreTxt.x += 300;
 		if(FlxG.save.data.botplay) scoreTxt.x = FlxG.width / 2 - 20;													  
 		add(scoreTxt);
-		infoTxt = new FlxText(healthBarBG.x - healthBarBG.width/2, healthBarBG.y + 26, 0, "", 20);
+		infoTxt = new FlxText(0, -300, 0, "", 20);
 		infoTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		infoTxt.scrollFactor.set();
-		add(infoTxt);
+		infoTxt.screenCenter(Y);
+		if (FlxG.save.data.infoTxt)
+			add(infoTxt);
 
 		replayTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 75, healthBarBG.y + (FlxG.save.data.downscroll ? 100 : -100), 0, "REPLAY", 20);
 		replayTxt.setFormat(Paths.font("vcr.ttf"), 42, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1110,6 +1118,7 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		infoTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		if (FlxG.save.data.songPosition)
 		{
@@ -1857,15 +1866,22 @@ class PlayState extends MusicBeatState
 			FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
 		}
 
+		if (healthBar.percent < 20)
+			scoreTxt.color = FlxColor.RED;
+		else if (healthBar.percent > 80) {
+			scoreTxt.color = FlxColor.CYAN;
+			}
+		else
+			scoreTxt.color = FlxColor.WHITE;
+
 		if (smash == true)
 		{
 			FlxG.camera.shake(0.005);
 			FlxG.camera.flash(FlxColor.WHITE, 0.7);
 			health -= 0.20;
-			boyfriend.playAnim(Paths.script('smashAnim', 'shared')); // dad.playAnim('smash');
+			boyfriend.playAnim('singRIGHTmiss'); // dad.playAnim('smash');
 			smash = false;
 		}
-
 		if (!FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
 			smash = true;
 
@@ -1974,7 +1990,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,maxNPS,accuracy);
-		infoTxt.text = "Sicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs; 
+		infoTxt.text = "Combo:" + combo + (!FlxG.save.data.botplay ? "\nSicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs : ""); 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -1982,7 +1998,7 @@ class PlayState extends MusicBeatState
 			paused = true;
 
 			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
+			if (FlxG.random.bool(0.1) || FlxG.save.data.altPause)
 			{
 				trace('GITAROO MAN EASTER EGG');
 				FlxG.switchState(new GitarooPause());
@@ -2020,8 +2036,9 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
-		if (health > 2)
-			health = 2;
+			if (health > 3)
+				health = 3;
+
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
 		else
@@ -2029,9 +2046,12 @@ class PlayState extends MusicBeatState
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 2;
+			iconP2.animation.curAnim.curFrame = 1;
 		else if (healthBar.percent < 20)
-			iconP2.animation.curAnim.curFrame = 1; 
+			if (dad.curCharacter == 'yumi')
+				iconP2.animation.curAnim.curFrame = 2;
+			else
+				iconP2.animation.curAnim.curFrame = 0
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 			iconP1.animation.curAnim.curFrame = 0;
@@ -2232,7 +2252,7 @@ class PlayState extends MusicBeatState
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
 					case 'yumi':
-						camFollow.y = dad.getMidpoint().y - -70;
+						camFollow.y = dad.getMidpoint().y - -110;
 				}
 
 				if (dad.curCharacter == 'mom')
@@ -2320,10 +2340,15 @@ class PlayState extends MusicBeatState
 			persistentDraw = false;
 			paused = true;
 
+			blubolls++;
+
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			if (FlxG.random.bool(50))
+				FlxG.switchState(new LooseState());
+			else
+				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 			#if windows
 			// Game Over doesn't get his own variable because it's only used here
@@ -2344,8 +2369,11 @@ class PlayState extends MusicBeatState
 		
 					vocals.stop();
 					FlxG.sound.music.stop();
-		
-					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+
+					if (FlxG.random.bool(50))
+						FlxG.switchState(new LooseState())
+					else
+						openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		
 					#if windows
 					// Game Over doesn't get his own variable because it's only used here
@@ -2708,7 +2736,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-
 	var endingSong:Bool = false;
 
 	var hits:Array<Float> = [];
@@ -2918,53 +2945,96 @@ class PlayState extends MusicBeatState
 			rating.cameras = [camHUD];
 
 			var sploosh:FlxSprite = new FlxSprite(daNote.x, playerStrums.members[daNote.noteData].y);
-			if (!curStage.startsWith('school'))
+			if (FlxG.save.data.noteSplashes)
 			{
-				var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('noteSplashes', 'shared');
-				sploosh.frames = tex;
-				sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
-				sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
-				sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
-				sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
-				sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
-				sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
-				sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
-				sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
-				if (daRating == 'sick')
+				if (!curStage.startsWith('school'))
 				{
-					add(sploosh);
-					sploosh.cameras = [camHUD];
-					sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-					sploosh.alpha = 0.6;
-					sploosh.offset.x += 90;
-					sploosh.offset.y += 80;
-					sploosh.animation.finishCallback = function(name) sploosh.kill();
+					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('noteSplashes', 'shared');
+					sploosh.frames = tex;
+					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
+					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
+					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
+					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
+					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
+					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
+					if (daRating == 'sick')
+					{
+						add(sploosh);
+						sploosh.cameras = [camHUD];
+						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+						sploosh.alpha = 0.6;
+						sploosh.offset.x += 90;
+						sploosh.offset.y += 80;
+						sploosh.animation.finishCallback = function(name) sploosh.kill();
+					}
+					else if (FlxG.save.data.botplay && daRating == 'good')
+					{
+						add(sploosh);
+						sploosh.cameras = [camHUD];
+						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+						sploosh.alpha = 0.6;
+						sploosh.offset.x += 90;
+						sploosh.offset.y += 80;
+						sploosh.animation.finishCallback = function(name) sploosh.kill();
+						playerStrums.forEach(function(spr:FlxSprite)
+						{
+							if (Math.abs(daNote.noteData) == spr.ID)
+							{
+								spr.animation.play('confirm', true);
+							}
+							spr.centerOffsets();
+							spr.offset.x -= 13;
+							spr.offset.y -= 13;
+						});
+					}
 				}
-			}
-			else
-			{
-				sploosh.loadGraphic(Paths.image('weeb/pixelUI/noteSplashes-pixels', 'week6'), true, 50, 50);
-				sploosh.animation.add('splash 0 0', [0, 1, 2, 3], 24, false);
-				sploosh.animation.add('splash 1 0', [4, 5, 6, 7], 24, false);
-				sploosh.animation.add('splash 0 1', [8, 9, 10, 11], 24, false);
-				sploosh.animation.add('splash 1 1', [12, 13, 14, 15], 24, false);
-				sploosh.animation.add('splash 0 2', [16, 17, 18, 19], 24, false);
-				sploosh.animation.add('splash 1 2', [20, 21, 22, 23], 24, false);
-				sploosh.animation.add('splash 0 3', [24, 25, 26, 27], 24, false);
-				sploosh.animation.add('splash 1 3', [28, 29, 30, 31], 24, false);
-				if (daRating == 'sick')
+				else
 				{
-					sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
-					sploosh.updateHitbox();
-					add(sploosh);
-					sploosh.cameras = [camHUD];
-					sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-					sploosh.alpha = 0.6;
-					sploosh.offset.x += 90;
-					sploosh.offset.y += 80;
-					sploosh.animation.finishCallback = function(name) sploosh.kill();
+					sploosh.loadGraphic(Paths.image('weeb/pixelUI/noteSplashes-pixels', 'week6'), true, 50, 50);
+					sploosh.animation.add('splash 0 0', [0, 1, 2, 3], 24, false);
+					sploosh.animation.add('splash 1 0', [4, 5, 6, 7], 24, false);
+					sploosh.animation.add('splash 0 1', [8, 9, 10, 11], 24, false);
+					sploosh.animation.add('splash 1 1', [12, 13, 14, 15], 24, false);
+					sploosh.animation.add('splash 0 2', [16, 17, 18, 19], 24, false);
+					sploosh.animation.add('splash 1 2', [20, 21, 22, 23], 24, false);
+					sploosh.animation.add('splash 0 3', [24, 25, 26, 27], 24, false);
+					sploosh.animation.add('splash 1 3', [28, 29, 30, 31], 24, false);
+					if (daRating == 'sick')
+					{
+						sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
+						sploosh.updateHitbox();
+						add(sploosh);
+						sploosh.cameras = [camHUD];
+						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+						sploosh.alpha = 0.6;
+						sploosh.offset.x += 90;
+						sploosh.offset.y += 80;
+						sploosh.animation.finishCallback = function(name) sploosh.kill();
+					}
+					else if (FlxG.save.data.botplay && daRating == 'good')
+						{
+							sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
+							sploosh.updateHitbox();
+							add(sploosh);
+							sploosh.cameras = [camHUD];
+							sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+							sploosh.alpha = 0.6;
+							sploosh.offset.x += 90;
+							sploosh.offset.y += 80;
+							sploosh.animation.finishCallback = function(name) sploosh.kill();
+							playerStrums.forEach(function(spr:FlxSprite)
+							{
+								if (Math.abs(daNote.noteData) == spr.ID)
+								{
+									spr.animation.play('confirm', true);
+								}
+								spr.centerOffsets();
+							});					
+						}
 				}
-			} // ahdddhdddhdjdhdjdddpssdufidsufpodiufoidsufpisdufiuodi i steal code from fnf mic'd upp (no fuck down) 
+		 	} // ahdddhdddhdjdhdjdddpssdufidsufpodiufoidsufpisdufiuodi i steal code from fnf mic'd upp (no fuck down) 
 
 			var seperatedScore:Array<Int> = [];
 	
@@ -3204,7 +3274,6 @@ class PlayState extends MusicBeatState
 						if (mashViolations > 4)
 						{
 							trace('mash violations ' + mashViolations);
-							scoreTxt.color = FlxColor.RED;
 							noteMiss(0,null);
 						}
 						else
