@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="clouds.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="all clouds 20000" x="50" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20001" x="1517" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20002" x="2984" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20003" x="2984" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20004" x="4451" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20005" x="5918" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20006" x="50" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20007" x="1517" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20008" x="2984" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20009" x="4451" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20010" x="5918" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20011" x="50" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20012" x="1517" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20013" x="2984" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20014" x="4451" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20015" x="5918" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20016" x="50" y="1733" width="1417" height="511"/>
+	<SubTexture name="all clouds 20017" x="1517" y="1733" width="1417" height="511"/>
+	<SubTexture name="all clouds 20018" x="1517" y="1172" width="1417" height="511"/>
+	<SubTexture name="all clouds 20019" x="2984" y="1733" width="1417" height="511"/>
+	<SubTexture name="all clouds 20020" x="4451" y="1733" width="1417" height="511"/>
+	<SubTexture name="all clouds 20021" x="4451" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20022" x="5918" y="1733" width="1417" height="511"/>
+	<SubTexture name="all clouds 20023" x="50" y="2294" width="1417" height="511"/>
+	<SubTexture name="all clouds 20024" x="50" y="611" width="1417" height="511"/>
+	<SubTexture name="all clouds 20025" x="1517" y="2294" width="1417" height="511"/>
+	<SubTexture name="all clouds 20026" x="2984" y="2294" width="1417" height="511"/>
+	<SubTexture name="all clouds 20027" x="2984" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20028" x="2984" y="50" width="1417" height="511"/>
+	<SubTexture name="all clouds 20029" x="2984" y="50" width="1417" height="511"/>
+</TextureAtlas>

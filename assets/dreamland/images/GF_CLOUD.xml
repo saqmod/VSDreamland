@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GF_CLOUD.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GF Dancing Beat0000" x="50" y="50" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0001" x="791" y="50" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0002" x="1532" y="50" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0003" x="2273" y="50" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0004" x="3014" y="50" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0005" x="50" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0006" x="791" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0007" x="791" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0008" x="1532" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0009" x="2273" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0010" x="3014" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0011" x="3014" y="602" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0012" x="50" y="1154" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0013" x="791" y="1154" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0014" x="1532" y="1154" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0015" x="1532" y="1154" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0016" x="2273" y="1154" width="691" height="502"/>
+	<SubTexture name="GF Dancing Beat0017" x="2273" y="1154" width="691" height="502"/>
+</TextureAtlas>
