@@ -85,10 +85,6 @@ class Main extends Sprite
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 
-		memoryCounter = new MemoryCounter(10, 3, 0xffffff);
-		addChild(memoryCounter);
-
-		toggleMem(FlxG.save.data.fps);
 		toggleFPS(FlxG.save.data.fps);
 		#end
 	}
@@ -96,13 +92,9 @@ class Main extends Sprite
 	var game:FlxGame;
 
 	var fpsCounter:FPS;
-	var memoryCounter:MemoryCounter;
 
 	public function toggleFPS(fpsEnabled:Bool):Void {
 		fpsCounter.visible = fpsEnabled;
-	}
-	public function toggleMem(memEnabled:Bool):Void {
-		memoryCounter.visible = memEnabled;
 	}
 
 	public function changeFPSColor(color:FlxColor)

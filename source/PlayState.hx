@@ -2405,11 +2405,15 @@ class PlayState extends MusicBeatState
 					// we be men and actually calculate the time :)
 					if (daNote.tooLate)
 					{
+						if(daNote.warning && (SONG.song.toLowerCase() == 'blammed')) 
+							health -= 2;
 						daNote.active = false;
 						daNote.visible = false;
 					}
 					else
 					{
+						if(daNote.warning && (SONG.song.toLowerCase() == 'blammed')) 
+							boyfriend.playAnim('dodge');
 						daNote.visible = true;
 						daNote.active = true;
 					}
@@ -2770,7 +2774,11 @@ class PlayState extends MusicBeatState
 
 			switch(daRating)
 			{
-				case 'uhh':
+				case 'shit':
+					if (dad.curCharacter.startsWith('bat'))
+						daRating = 'idiot';
+					else
+						daRating = 'eh';
 					score = -300;
 					combo = 0;
 					misses++;
@@ -2779,15 +2787,21 @@ class PlayState extends MusicBeatState
 					uhhs++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.25;
-				case 'ok':
-					daRating = 'ok';
+				case 'bad':
+					if (dad.curCharacter.startsWith('bat'))
+						daRating = 'dotsBad';
+					else
+						daRating = 'huh';
 					score = 75;
 					ss = false;
 					oks++;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.50;
 				case 'good':
-					daRating = 'good';
+					if (dad.curCharacter.startsWith('bat'))
+						daRating = 'dots';
+					else
+						daRating = 'nice';
 					score = 200;
 					ss = false;
 					goods++;
@@ -2796,6 +2810,10 @@ class PlayState extends MusicBeatState
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
 				case 'sick':
+					if (dad.curCharacter.startsWith('bat'))
+						daRating = 'dots';
+					else
+						daRating = 'sick';
 					if (health < 2)
 						health += 0.1;
 					if (FlxG.save.data.accuracyMod == 0)
@@ -2821,15 +2839,16 @@ class PlayState extends MusicBeatState
 			 */
 	
 			var pixelShitPart1:String = "";
+			if(dad.curCharacter == 'yumi') { pixelShitPart1 = "yumi"; }
+			else if(dad.curCharacter.startsWith('bat')) { pixelShitPart1 = "bat"; }
 			var pixelShitPart2:String = '';
 	
 			if (curStage.startsWith('school'))
 			{
-				pixelShitPart1 = 'weeb/pixelUI/';
 				pixelShitPart2 = '-pixel';
 			}
 	
-			rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
+			rating.loadGraphic(Paths.image('ratings/' + pixelShitPart1 + "/" + daRating + pixelShitPart2, 'dreamland'));
 			rating.screenCenter();
 			rating.y -= 50;
 			rating.x = coolText.x - 125;
@@ -2853,11 +2872,11 @@ class PlayState extends MusicBeatState
 			timeShown = 0;
 			switch(daRating)
 			{
-				case 'uhh':
+				case 'idiot' | 'eh':
 					currentTimingShown.color = FlxColor.RED;
-				case 'good' | 'ok':
+				case 'dotsBad' | 'nice':
 					currentTimingShown.color = FlxColor.GREEN;
-				case 'sick':
+				case 'dots' | 'sick':
 					currentTimingShown.color = FlxColor.CYAN;
 			}
 			currentTimingShown.borderStyle = OUTLINE;
@@ -2949,16 +2968,16 @@ class PlayState extends MusicBeatState
 			{
 				if (!curStage.startsWith('school'))
 				{
-					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('noteSplashes', 'shared');
+					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('UIshit/noteSplashes', 'dreamland');
 					sploosh.frames = tex;
-					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
-					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
-					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
-					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
-					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
-					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
-					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
+					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2  blue', 24, false);
 					if (daRating == 'sick')
 					{
 						add(sploosh);
@@ -2969,7 +2988,7 @@ class PlayState extends MusicBeatState
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
 					}
-					else if (FlxG.save.data.botplay && daRating == 'good')
+					else if (FlxG.save.data.botplay && daRating == 'dots' || FlxG.save.data.botplay && daRating == 'nice')
 					{
 						add(sploosh);
 						sploosh.cameras = [camHUD];
@@ -3013,7 +3032,7 @@ class PlayState extends MusicBeatState
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
 					}
-					else if (FlxG.save.data.botplay && daRating == 'good')
+					else if (FlxG.save.data.botplay && daRating == 'dots' || FlxG.save.data.botplay && daRating == 'nice')
 						{
 							sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
 							sploosh.updateHitbox();
