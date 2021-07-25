@@ -184,7 +184,7 @@ class TitleState extends MusicBeatState
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
 		titleText.frames = Paths.getSparrowAtlas('press_start_menu', 'dreamland');
-		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+		titleText.animation.addByPrefix('idle', "Press Enter To Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;
 		titleText.animation.play('idle');
@@ -417,24 +417,22 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
 			case 9:
-				createCoolText(['Pico funni']);
+				createCoolText([curWacky[0]]);
 			// credTextShit.visible = true;
 			case 11:
-				addMoreText('pico funni');
+				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
+				addMoreText('Friday');
 			case 13:
-				addMoreText('Funk');
+				addMoreText('Night');
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('In');
+				addMoreText('Funkin');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Dreamland'); // credTextShit.text += '\nFunkin';
+				addMoreText('VS Dreamland'); // credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();

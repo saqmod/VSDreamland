@@ -188,6 +188,72 @@ class InfoText extends Option
 
 }
 
+class FPSplusAccDisplay extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.altAccuracy = !FlxG.save.data.altAccuracy;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay()
+	{
+		return "Fps Plus Accuracy " + (!FlxG.save.data.altAccuracy ? "off" : "on");
+	}
+}
+
+class NoteGlowing extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.noteGlowing = !FlxG.save.data.noteGlowing;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay()
+	{
+		return "Note Glowing " + (!FlxG.save.data.noteGlowing ? 'off' : 'on');
+	}
+}
+
+class Fullscreen extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.fullscreen = !FlxG.fullscreen;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay()
+	{
+		return 'Fullscreen ' + (!FlxG.fullscreen ? "off" : "on");
+	}
+}
+
 class AltPause extends Option
 {
 	public function new(desc:String)
@@ -291,7 +357,7 @@ class AccuracyOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
+		return "-Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
 	}
 }
 

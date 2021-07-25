@@ -53,6 +53,7 @@ class OptionsMenu extends MusicBeatState
 		
 		new OptionCategory("Misc", [
 			#if desktop
+			new Fullscreen("Toggle fullscreen"),
 			new FPSOption("Toggle the FPS Counter"),
 			new ReplayOption("View replays"),
 			#end
@@ -66,7 +67,9 @@ class OptionsMenu extends MusicBeatState
 			new ShowGF("Show Girlfriend in game"),
 			new MenuOption("Lite menu | Classic menu"),
 			new InfoText("Information"),
-			new AltPause("Alternative (Secret) Pause in 100% chance")
+			new AltPause("Alternative (Secret) Pause in 100% chance"),
+			new FPSplusAccDisplay("Fps Plus Accuracy Display"),
+			new NoteGlowing("Note starts glowing if you can hit it")
 		])
 		
 	];

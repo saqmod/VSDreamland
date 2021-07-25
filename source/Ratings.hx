@@ -131,11 +131,15 @@ class Ratings
 
     public static function CalculateRanking(score:Int,scoreDef:Int,nps:Int,maxNPS:Int,accuracy:Float):String
     {
+        if (!FlxG.save.data.altAccuracy) {
         return 
         (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + (!FlxG.save.data.botplay ? " | " : "") : "") + (!FlxG.save.data.botplay ?	// NPS Toggle
         "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + 									// Score
         (FlxG.save.data.accuracyDisplay ? " | Misses:" + PlayState.misses + 																				// Misses/Combo Breaks
         " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// Accuracy
-        " | " + GenerateLetterRank(accuracy) : "") : ""); 																			// Letter Rank
+        " | " + GenerateLetterRank(accuracy) : "") : ""); }
+        else {
+            return "Score:" + score + (FlxG.save.data.accuracyDisplay ? " | Misses:" + PlayState.misses + " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") : "");
+        }																// Letter Rank
     }
 }

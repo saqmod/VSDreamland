@@ -38,9 +38,13 @@ class Note extends FlxSprite
 
 	public var rating:String = "shit";
 
+	var lib:String = 'week6';
+	var sublib:String = '';
+
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
+
 
 		if (prevNote == null)
 			prevNote = this;
@@ -63,7 +67,10 @@ class Note extends FlxSprite
 			switch (PlayState.SONG.noteStyle)
 			{
 				case 'pixel':
-					loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels','week6'), true, 17, 17);
+					if (FlxG.save.data.noteGlowing)
+						loadGraphic(Paths.image('fpsPlus/weeb/pixelUI/arrows-pixels', 'dreamland'), true, 17, 17);
+					else
+						loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
 
 					animation.add('greenScroll', [6]);
 					animation.add('redScroll', [7]);
@@ -84,11 +91,20 @@ class Note extends FlxSprite
 						animation.add('redhold', [3]);
 						animation.add('bluehold', [1]);
 					}
+					if (FlxG.save.data.noteGlowing) {
+						animation.add('green glow', [22]);
+						animation.add('red glow', [23]);
+						animation.add('blue glow', [21]);
+						animation.add('purple glow', [20]); }
+
 
 					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 					updateHitbox();
 				default:
-					frames = Paths.getSparrowAtlas('NOTE_assets');
+					if (FlxG.save.data.noteGlowing)
+						frames = Paths.getSparrowAtlas('fpsPlus/NOTE_assets', 'dreamland');
+					else
+						frames = Paths.getSparrowAtlas('NOTE_assets');
 
 					animation.addByPrefix('greenScroll', 'green0');
 					animation.addByPrefix('redScroll', 'red0');
@@ -104,6 +120,12 @@ class Note extends FlxSprite
 					animation.addByPrefix('greenhold', 'green hold piece');
 					animation.addByPrefix('redhold', 'red hold piece');
 					animation.addByPrefix('bluehold', 'blue hold piece');
+
+					if (FlxG.save.data.noteGlowing) {
+						animation.addByPrefix('purple glow', 'Purple Active');
+						animation.addByPrefix('green glow', 'Green Active');
+						animation.addByPrefix('red glow', 'Red Active');
+						animation.addByPrefix('blue glow', 'Blue Active'); }
 
 					setGraphicSize(Std.int(width * 0.7));
 					updateHitbox();
@@ -220,5 +242,36 @@ class Note extends FlxSprite
 			if (alpha > 0.3)
 				alpha = 0.3;
 		}
+
+		//Glow note stuff.
+
+		if (canBeHit && FlxG.save.data.noteGlowing && !isSustainNote && animation.curAnim.name.contains("Scroll")){
+			switch (noteData)
+			{
+				case 2:
+					animation.play('green glow');
+				case 3:
+					animation.play('red glow');
+				case 1:
+					animation.play('blue glow');
+				case 0:
+					animation.play('purple glow');
+			}
+		}
+
+		if (tooLate && !isSustainNote && !animation.curAnim.name.contains("Scroll")){
+			switch (noteData)
+			{
+				case 2:
+					animation.play('greenScroll');
+				case 3:
+					animation.play('redScroll');
+				case 1:
+					animation.play('blueScroll');
+				case 0:
+					animation.play('purpleScroll');
+			}
+		}
 	}
+
 }
