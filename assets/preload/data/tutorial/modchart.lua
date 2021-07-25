@@ -1,5 +1,5 @@
 function start(song) -- do everything
-print('yo chart loaded')
+    print('yo chart loaded')
 end
 
 function update(elapsed)
