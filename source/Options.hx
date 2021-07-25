@@ -747,6 +747,29 @@ class WatermarkOption extends Option
 	}
 }
 
+class OffsetTest extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		trace("switch");
+		
+		FlxG.switchState(new AutoOffsetState());
+		PlayState.offsetTesting = true;
+		return false;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Offset test";
+	}
+}
+
 class OffsetMenu extends Option
 {
 	public function new(desc:String)

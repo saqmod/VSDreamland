@@ -63,7 +63,8 @@ class OptionsMenu extends MusicBeatState
 		]),
 		new OptionCategory("Fps Plus", [
 			new FPSplusAccDisplay("Fps Plus Accuracy Display"),
-			new NoteGlowing("Note starts glowing if you can hit it")
+			new NoteGlowing("Note starts glowing if you can hit it"),
+			new OffsetTest("Time your offset")
 		]),
 		new OptionCategory("Custom", [
 			new NoteSplashes("Show note splashes"),
