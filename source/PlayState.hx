@@ -2970,14 +2970,14 @@ class PlayState extends MusicBeatState
 				{
 					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('UIshit/noteSplashes', 'dreamland');
 					sploosh.frames = tex;
-					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2  blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 blue', 24, false);
 					if (daRating == 'sick')
 					{
 						add(sploosh);
@@ -2988,7 +2988,7 @@ class PlayState extends MusicBeatState
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
 					}
-					else if (FlxG.save.data.botplay && daRating == 'dots' || FlxG.save.data.botplay && daRating == 'nice')
+					else if (FlxG.save.data.botplay && daRating == 'good')
 					{
 						add(sploosh);
 						sploosh.cameras = [camHUD];
@@ -2997,16 +2997,6 @@ class PlayState extends MusicBeatState
 						sploosh.offset.x += 90;
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
-						playerStrums.forEach(function(spr:FlxSprite)
-						{
-							if (Math.abs(daNote.noteData) == spr.ID)
-							{
-								spr.animation.play('confirm', true);
-							}
-							spr.centerOffsets();
-							spr.offset.x -= 13;
-							spr.offset.y -= 13;
-						});
 					}
 				}
 				else
@@ -3032,7 +3022,7 @@ class PlayState extends MusicBeatState
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
 					}
-					else if (FlxG.save.data.botplay && daRating == 'dots' || FlxG.save.data.botplay && daRating == 'nice')
+					else if (FlxG.save.data.botplay && daRating == 'good')
 						{
 							sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
 							sploosh.updateHitbox();
@@ -3042,15 +3032,7 @@ class PlayState extends MusicBeatState
 							sploosh.alpha = 0.6;
 							sploosh.offset.x += 90;
 							sploosh.offset.y += 80;
-							sploosh.animation.finishCallback = function(name) sploosh.kill();
-							playerStrums.forEach(function(spr:FlxSprite)
-							{
-								if (Math.abs(daNote.noteData) == spr.ID)
-								{
-									spr.animation.play('confirm', true);
-								}
-								spr.centerOffsets();
-							});					
+							sploosh.animation.finishCallback = function(name) sploosh.kill();				
 						}
 				}
 		 	} // ahdddhdddhdjdhdjdddpssdufidsufpodiufoidsufpisdufiuodi i steal code from fnf mic'd upp (no fuck down) 

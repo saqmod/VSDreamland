@@ -90,20 +90,20 @@ class Note extends FlxSprite
 				default:
 					frames = Paths.getSparrowAtlas('UIshit/NOTE_assets', 'dreamland');
 
-					animation.addByPrefix('greenScroll', 'green0');
-					animation.addByPrefix('redScroll', 'red0');
-					animation.addByPrefix('blueScroll', 'blue0');
-					animation.addByPrefix('purpleScroll', 'purple0');
+					animation.addByPrefix('greenScroll', 'green instane 1');
+					animation.addByPrefix('redScroll', 'red instane 1');
+					animation.addByPrefix('blueScroll', 'blue instane 1');
+					animation.addByPrefix('purpleScroll', 'purple instane 1');
 
-					animation.addByPrefix('purpleholdend', 'pruple end hold');
-					animation.addByPrefix('greenholdend', 'green hold end');
-					animation.addByPrefix('redholdend', 'red hold end');
-					animation.addByPrefix('blueholdend', 'blue hold end');
+					animation.addByPrefix('purpleholdend', 'pruple end hold instance 1');
+					animation.addByPrefix('greenholdend', 'green end hold instane 1');
+					animation.addByPrefix('redholdend', 'red end hold instane 1');
+					animation.addByPrefix('blueholdend', 'blue end hold instane 1');
 
-					animation.addByPrefix('purplehold', 'purple hold piece');
-					animation.addByPrefix('greenhold', 'green hold piece');
-					animation.addByPrefix('redhold', 'red hold piece');
-					animation.addByPrefix('bluehold', 'blue hold piece');
+					animation.addByPrefix('purplehold', 'purple hold piece instance 1');
+					animation.addByPrefix('greenhold', 'green hold piece instane 1');
+					animation.addByPrefix('redhold', 'red hold piece instane 1');
+					animation.addByPrefix('bluehold', 'blue hold piece instane 1');
 
 					setGraphicSize(Std.int(width * 0.7));
 					updateHitbox();
