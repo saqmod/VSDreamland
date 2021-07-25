@@ -61,15 +61,16 @@ class OptionsMenu extends MusicBeatState
 			new WatermarkOption("Enable and disable dreamland watermarks."),
 			new BotPlay("Showcase your charts and mods with autoplay.")
 		]),
-
+		new OptionCategory("Fps Plus", [
+			new FPSplusAccDisplay("Fps Plus Accuracy Display"),
+			new NoteGlowing("Note starts glowing if you can hit it")
+		]),
 		new OptionCategory("Custom", [
 			new NoteSplashes("Show note splashes"),
 			new ShowGF("Show Girlfriend in game"),
 			new MenuOption("Lite menu | Classic menu"),
 			new InfoText("Information"),
-			new AltPause("Alternative (Secret) Pause in 100% chance"),
-			new FPSplusAccDisplay("Fps Plus Accuracy Display"),
-			new NoteGlowing("Note starts glowing if you can hit it")
+			new AltPause("Alternative (Secret) Pause in 100% chance")
 		])
 		
 	];
