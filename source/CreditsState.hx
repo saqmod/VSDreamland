@@ -17,6 +17,8 @@ class CreditsState extends MusicBeatState
 
 	public static var needVer:String = "IDFK LOL";
 	public static var currChanges:String = "dk";
+
+	private var daYumi:Character;
 	
 	private var bgColors:Array<String> = [
 		'#314d7f',
@@ -38,9 +40,13 @@ class CreditsState extends MusicBeatState
 		bg.scale.y *= 1.55;
 		bg.screenCenter();
 
+		daYumi = new Character(100, 100, 'yumi');
+		daYumi.animation.play("idle");
+		add(daYumi);
+
 		
 		var kadeLogo:FlxSprite = new FlxSprite(FlxG.width, 0);
-		kadeLogo.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin');
+		kadeLogo.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
 		kadeLogo.animation.addByPrefix('bump', 'logo bumpin', 24);
 		kadeLogo.animation.play('bump');
 		kadeLogo.scale.y = 0.3;
@@ -51,7 +57,7 @@ class CreditsState extends MusicBeatState
 		add(kadeLogo);
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			("-- Idea --" +
+			(FlxG.random.bool(20) ? "July 26 Aaronrocks40 birthday yee" : "-- Idea --" +
 			"\nAaronrocks40\n\n" +
 			"-- Programmers --" +
 			"\nGEDON6676" +
@@ -62,7 +68,7 @@ class CreditsState extends MusicBeatState
 			"-- Voice Actors --" +
 			"\nMasked Sender" +
 			"\nInspired Sarah" +
-			"\n\n-- Compositors --" +
+			"\n\n-- Composers --" +
 			"\nChocoChurro" +
 			"\nJorclai" +
 			"\nChoke Me" +
@@ -115,5 +121,12 @@ class CreditsState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 		super.update(elapsed);
+	}
+
+	override function beatHit()
+	{
+		super.beatHit();
+
+		daYumi.dance();
 	}
 }

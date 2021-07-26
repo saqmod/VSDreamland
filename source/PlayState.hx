@@ -134,6 +134,7 @@ class PlayState extends MusicBeatState
 	private var gfSpeed:Int = 1;
 	public var health:Float = 1; //making public because sethealth doesnt work without it
 	private var combo:Int = 0;
+	private var totalCombo:Int = 0;
 	public static var misses:Int = 0;
 	private var accuracy:Float = 0.00;
 	private var accuracyDefault:Float = 0.00;
@@ -1998,7 +1999,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,maxNPS,accuracy);
-		infoTxt.text = "Combo:" + combo + (!FlxG.save.data.botplay ? "\nSicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs : ""); 
+		infoTxt.text = ("Total combo:" + totalCombo + "\nCombo:" + combo + (!FlxG.save.data.botplay ? "\nSicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs : "")); 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -3511,6 +3512,7 @@ class PlayState extends MusicBeatState
 					{
 						popUpScore(note);
 						combo += 1;
+						totalCombo++;
 					}
 					else
 						totalNotesHit += 1;

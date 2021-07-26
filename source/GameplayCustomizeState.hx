@@ -57,7 +57,7 @@ class GameplayCustomizeState extends MusicBeatState
 
 		var camFollow = new FlxObject(0, 0, 1, 1);
 
-		dad = new Character(100, 100, 'dad');
+		dad = new Character(100, 100, 'yumi');
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 400, dad.getGraphicMidpoint().y);
 
@@ -145,7 +145,7 @@ class GameplayCustomizeState extends MusicBeatState
         super.beatHit();
 
         bf.playAnim('idle');
-        dad.dance();
+        dad.playAnim('idle');
 
         FlxG.camera.zoom += 0.015;
         camHUD.zoom += 0.010;
@@ -208,6 +208,9 @@ class GameplayCustomizeState extends MusicBeatState
                 babyArrow.x += ((FlxG.width / 2) * player);
     
                 strumLineNotes.add(babyArrow);
+
+                add(PlayState.playerStrums);
+                add(PlayState.cpuStrums);
             }
         }
 }
