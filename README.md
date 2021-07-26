@@ -48,13 +48,13 @@ If you're looking for documentation, changelogs, or guides, you can find those o
 
  - **Note splashes**
 	- Yoo note splashes from week 7
- - ** Fps plus features **
+ - **Fps plus features**
 	- Note glowing, fps plus accuracy display and offset test
- - ** Show GF option **
+ - **Show GF option**
 	- For potato computers
- - ** Information display **
+ - **Information display**
 	- View count of sicks, goods, bads, shits and combo
- - ** Alt pause option **
+ - **Alt pause option**
 	- Secret pause in 100% chance
 
 # Credits
