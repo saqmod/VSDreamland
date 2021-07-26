@@ -44,6 +44,19 @@ If you're looking for documentation, changelogs, or guides, you can find those o
  - **Audio offset**
 	 - If your headphones are delayed, you can set an offset in the options menu to line the game up with the delay and play with synced audio like intended.
 
+# Dreamland features
+
+ - **Note splashes**
+	- Yoo note splashes from week 7
+ - ** Fps plus features **
+	- Note glowing, fps plus accuracy display and offset test
+ - ** Show GF option **
+	- For potato computers
+ - ** Information display **
+	- View count of sicks, goods, bads, shits and combo
+ - ** Alt pause option **
+	- Secret pause in 100% chance
+
 # Credits
 ### Friday Night Funkin'
  - [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programming
