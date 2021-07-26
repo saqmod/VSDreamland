@@ -57,7 +57,7 @@ class CreditsState extends MusicBeatState
 		add(kadeLogo);
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			(FlxG.random.bool(20) ? "July 26 Aaronrocks40 birthday yee" : "-- Idea --" +
+			(FlxG.random.bool(20) ? /* "Easter egg lmao" */"July 26 Aaronrocks40 birthday yee" : "-- Idea --" +
 			"\nAaronrocks40\n\n" +
 			"-- Programmers --" +
 			"\nGEDON6676" +
