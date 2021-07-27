@@ -17,6 +17,8 @@ class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
 
+	public var warning:Bool = false;
+
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
@@ -24,7 +26,6 @@ class Note extends FlxSprite
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
 	public var modifiedByLua:Bool = false;
-	public var warning:Bool = false;
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 
@@ -132,26 +133,36 @@ class Note extends FlxSprite
 					antialiasing = true;
 			}
 		}else {
-			loadGraphic(Paths.image('UIshit/warningNote', 'dreamland'));
+			loadGraphic(Paths.image('UIshit/warningNote', 'dreamland'), true, 157, 154);
+			animation.add('warnScroll', [0]);
 			setGraphicSize(Std.int(width * 0.7));
 			updateHitbox();
 			antialiasing = true;
 		}
 
-		switch (noteData)
-		{
-			case 0:
-				x += swagWidth * 0;
-				animation.play('purpleScroll');
-			case 1:
-				x += swagWidth * 1;
-				animation.play('blueScroll');
-			case 2:
-				x += swagWidth * 2;
-				animation.play('greenScroll');
-			case 3:
-				x += swagWidth * 3;
-				animation.play('redScroll');
+		if(!warning) {
+			switch (noteData)
+			{
+				case 0:
+					x += swagWidth * 0;
+					animation.play('purpleScroll');
+				case 1:
+					x += swagWidth * 1;
+					animation.play('blueScroll');
+				case 2:
+					x += swagWidth * 2;
+					animation.play('greenScroll');
+				case 3:
+					x += swagWidth * 3;
+					animation.play('redScroll');
+			} }
+		else {
+			switch (noteData)
+			{
+				case 0:
+					x += swagWidth * noteData;
+					animation.play('warnScroll');
+			}
 		}
 
 		// trace(prevNote);

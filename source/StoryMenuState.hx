@@ -23,6 +23,8 @@ class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
 
+	var yellowBG:FlxSprite;
+
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
 		['Lucid Dreams'],
@@ -92,7 +94,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		var yellowBG:FlxSprite = new FlxSprite(0, 56).loadGraphic(Paths.image('storyBG/week' + Std.string(curWeek), 'dreamland'));
+		yellowBG = new FlxSprite(0, 56).loadGraphic(Paths.image('storyBG/week' + Std.string(curWeek), 'dreamland'));
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -344,6 +346,8 @@ class StoryMenuState extends MusicBeatState
 			curWeek = 0;
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
+
+		yellowBG.updateHitbox();
 
 		var bullShit:Int = 0;
 

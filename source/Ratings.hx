@@ -139,7 +139,7 @@ class Ratings
         " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// Accuracy
         " | " + GenerateLetterRank(accuracy) : "") : ""); }
         else {
-            return "Score:" + score + (FlxG.save.data.accuracyDisplay ? " | Misses:" + PlayState.misses + " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") : "");
+            return (!FlxG.save.data.botplay ? "Score:" + score + (FlxG.save.data.accuracyDisplay ? " | Misses:" + PlayState.misses + " | Accuracy:" + Std.int(HelperFunctions.truncateFloat(accuracy, 2)) + "%" : "") : "");
         }																// Letter Rank
     }
 }
