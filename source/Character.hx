@@ -230,6 +230,13 @@ class Character extends FlxSprite
 				playAnim('idle');
 				trace('cute girl is selected');
 			case 'bat':
+				tex = Paths.getSparrowAtlas('characters/batBETA', 'dreamland');
+				frames = tex;
+				animation.addByPrefix('idle', 'bat idle', 24, false);
+
+				addOffset('idle');
+
+				playAnim('idle');
 				trace('this is not cute');
 			case 'bat-evil':
 				trace('THIS IS 100% IS NOT CUTE');

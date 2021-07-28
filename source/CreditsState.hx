@@ -11,6 +11,10 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 
+#if windows
+import Discord.DiscordClient;
+#end
+
 class CreditsState extends MusicBeatState
 {
 	public static var leftState:Bool = false;
@@ -18,7 +22,7 @@ class CreditsState extends MusicBeatState
 	public static var needVer:String = "IDFK LOL";
 	public static var currChanges:String = "dk";
 
-	private var daYumi:Character;
+	private var daChar:Character;
 	
 	private var bgColors:Array<String> = [
 		'#314d7f',
@@ -40,10 +44,16 @@ class CreditsState extends MusicBeatState
 		bg.scale.y *= 1.55;
 		bg.screenCenter();
 
-		daYumi = new Character(100, 100, 'yumi');
-		daYumi.animation.play("idle");
-		add(daYumi);
+		if (FlxG.random.bool(50))
+			daChar = new Character(100, 100, 'bat')
+		else
+			daChar = new Character(100, 100, 'yumi');
+		add(daChar);
 
+		#if windows
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Credits menu", null);
+		#end
 		
 		var kadeLogo:FlxSprite = new FlxSprite(FlxG.width, 0);
 		kadeLogo.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
@@ -57,7 +67,7 @@ class CreditsState extends MusicBeatState
 		add(kadeLogo);
 		
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			(FlxG.random.bool(20) ? /* "Easter egg lmao" */"July 26 Aaronrocks40 birthday yee" : "-- Idea --" +
+			(FlxG.random.bool(20) ? "July 26 Aaronrocks40 birthday yee" : "-- Idea --" +
 			"\nAaronrocks40\n\n" +
 			"-- Programmers --" +
 			"\nGEDON6676" +
@@ -120,13 +130,13 @@ class CreditsState extends MusicBeatState
 			leftState = true;
 			FlxG.switchState(new MainMenuState());
 		}
+		var danced:Bool = false;
+		if (!danced)
+			danced = true;
+		if (danced)
+			daChar.playAnim('idle');
+			danced = false;
+
 		super.update(elapsed);
-	}
-
-	override function beatHit()
-	{
-		super.beatHit();
-
-		daYumi.dance();
 	}
 }

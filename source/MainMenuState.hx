@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 
 	var yumiOrbat:FlxSprite;
 
-	var optionShit:Array<String> = ['story mode', 'freeplay', 'credits', 'options'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate', 'options'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -168,7 +168,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
+				if (optionShit[curSelected] == 'ass')
 				{
 					#if linux
 					Sys.command('/usr/bin/xdg-open', ["https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game", "&"]);
@@ -234,7 +234,7 @@ class MainMenuState extends MusicBeatState
 				FlxG.switchState(new FreeplayState());
 
 				trace("Freeplay Menu Selected");
-			case 'credits':
+			case 'donate':
 				FlxG.switchState(new CreditsState());
 			case 'options':
 				FlxG.switchState(new OptionsMenu());
