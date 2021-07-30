@@ -350,8 +350,7 @@ class TitleState extends MusicBeatState
 			credGroup.add(money);
 			textGroup.add(money);
 
-			FlxTween.tween(money, {y: money.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
-			FlxTween.tween(money, {x: money.x + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+			FlxTween.tween(money,{y: -100}, 1.4, {ease: FlxEase.expoInOut});
 		}
 	}
 
@@ -363,8 +362,7 @@ class TitleState extends MusicBeatState
 		credGroup.add(coolText);
 		textGroup.add(coolText);
 
-		FlxTween.tween(coolText, {y: coolText.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
-		FlxTween.tween(coolText, {x: coolText.x + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
+		FlxTween.tween(coolText,{y: -100}, 1.4, {ease: FlxEase.expoInOut});
 	}
 
 	function deleteCoolText()

@@ -90,6 +90,7 @@ class PlayState extends MusicBeatState
 
 	public static var rep:Replay;
 	public static var loadRep:Bool = false;
+	public static var preloading:Bool = true;
 
 	public static var noteBools:Array<Bool> = [false, false, false, false];
 
@@ -363,14 +364,8 @@ class PlayState extends MusicBeatState
 					halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
 					halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
 					halloweenBG.animation.play('idle');
-					if (FlxG.save.data.anliasting)
-					{
+					if (FlxG.save.data.antialiasing)
 						halloweenBG.antialiasing = true;
-					}
-					if (!FlxG.save.data.anliasting)
-					{
-						halloweenBG.antialiasing = false;
-					}
 					add(halloweenBG);
 
 					isHalloween = true;
@@ -404,14 +399,9 @@ class PlayState extends MusicBeatState
 								light.visible = false;
 								light.setGraphicSize(Std.int(light.width * 0.85));
 								light.updateHitbox();
-								if (FlxG.save.data.anliasting)
-								{
+								if (FlxG.save.data.antialiasing)
 									light.antialiasing = true;
-								}
-								if (!FlxG.save.data.anliasting)
-								{
-									light.antialiasing = false;
-								}
+
 								if(FlxG.save.data.bgHigh){
 									phillyCityLights.add(light);
 								}
@@ -482,14 +472,8 @@ class PlayState extends MusicBeatState
 						limo.frames = limoTex;
 						limo.animation.addByPrefix('drive', "Limo stage", 24);
 						limo.animation.play('drive');
-						if (FlxG.save.data.anliasting)
-						{
+						if (FlxG.save.data.antialiasing)
 							limo.antialiasing = true;
-						}
-						if (!FlxG.save.data.anliasting)
-						{
-							limo.antialiasing = false;
-						}
 
 						fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.image('limo/fastCarLol','week4'));
 						// add(limo);
@@ -501,14 +485,8 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.80;
 
 						var bg:FlxSprite = new FlxSprite(-1000, -500).loadGraphic(Paths.image('christmas/bgWalls','week5'));
-						if (FlxG.save.data.anliasting)
-						{
+						if (FlxG.save.data.antialiasing)
 							bg.antialiasing = true;
-						}
-						if (!FlxG.save.data.anliasting)
-						{
-							bg.antialiasing = false;
-						}
 						bg.scrollFactor.set(0.2, 0.2);
 						bg.active = false;
 						bg.setGraphicSize(Std.int(bg.width * 0.8));
@@ -518,14 +496,8 @@ class PlayState extends MusicBeatState
 						upperBoppers = new FlxSprite(-240, -90);
 						upperBoppers.frames = Paths.getSparrowAtlas('christmas/upperBop','week5');
 						upperBoppers.animation.addByPrefix('bop', "Upper Crowd Bob", 24, false);
-						if (FlxG.save.data.anliasting)
-						{
+						if (FlxG.save.data.antialiasing)
 							upperBoppers.antialiasing = true;
-						}
-						if (!FlxG.save.data.anliasting)
-						{
-							upperBoppers.antialiasing = false;
-						}
 						upperBoppers.scrollFactor.set(0.33, 0.33);
 						upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 0.85));
 						upperBoppers.updateHitbox();
@@ -537,14 +509,8 @@ class PlayState extends MusicBeatState
 
 
 						var bgEscalator:FlxSprite = new FlxSprite(-1100, -600).loadGraphic(Paths.image('christmas/bgEscalator','week5'));
-						if (FlxG.save.data.anliasting)
-						{
+						if (FlxG.save.data.antialiasing)
 							bgEscalator.antialiasing = true;
-						}
-						if (!FlxG.save.data.anliasting)
-						{
-							bgEscalator.antialiasing = false;
-						}
 						bgEscalator.scrollFactor.set(0.3, 0.3);
 						bgEscalator.active = false;
 						bgEscalator.setGraphicSize(Std.int(bgEscalator.width * 0.9));
@@ -555,25 +521,13 @@ class PlayState extends MusicBeatState
 
 						var fgSnow:FlxSprite = new FlxSprite(-600, 700).loadGraphic(Paths.image('christmas/fgSnow','week5'));
 						fgSnow.active = false;
-						if (FlxG.save.data.anliasting)
-						{
+						if (FlxG.save.data.antialiasing)
 							fgSnow.antialiasing = true;
-						}
-						if (!FlxG.save.data.anliasting)
-						{
-							fgSnow.antialiasing = false;
-						}
 
 						if(FlxG.save.data.bgHigh){
 							var tree:FlxSprite = new FlxSprite(370, -250).loadGraphic(Paths.image('christmas/christmasTree','week5'));
-							if (FlxG.save.data.anliasting)
-							{
+							if (FlxG.save.data.antialiasing)
 								tree.antialiasing = true;
-							}
-							if (!FlxG.save.data.anliasting)
-							{
-								tree.antialiasing = false;
-							}
 							tree.scrollFactor.set(0.40, 0.40);
 							add(tree);
 						}
@@ -582,14 +536,8 @@ class PlayState extends MusicBeatState
 							bottomBoppers = new FlxSprite(-300, 140);
 							bottomBoppers.frames = Paths.getSparrowAtlas('christmas/bottomBop','week5');
 							bottomBoppers.animation.addByPrefix('bop', 'Bottom Level Boppers', 24, false);
-							if (FlxG.save.data.anliasting)
-							{
+							if (FlxG.save.data.antialiasing)
 								bottomBoppers.antialiasing = true;
-							}
-							if (!FlxG.save.data.anliasting)
-							{
-								bottomBoppers.antialiasing = false;
-							}
 							bottomBoppers.scrollFactor.set(0.9, 0.9);
 							bottomBoppers.setGraphicSize(Std.int(bottomBoppers.width * 1));
 							bottomBoppers.updateHitbox();
@@ -600,14 +548,8 @@ class PlayState extends MusicBeatState
 							santa = new FlxSprite(-840, 150);
 							santa.frames = Paths.getSparrowAtlas('christmas/santa','week5');
 							santa.animation.addByPrefix('idle', 'santa idle in fear', 24, false);
-							if (FlxG.save.data.anliasting)
-								{
-									santa.antialiasing = true;
-								}
-								if (!FlxG.save.data.anliasting)
-								{
-									santa.antialiasing = false;
-								}
+							if (FlxG.save.data.antialiasing)
+								santa.antialiasing = true;
 							if(FlxG.save.data.distractions){
 								add(santa);
 							}
@@ -617,14 +559,8 @@ class PlayState extends MusicBeatState
 				{
 						curStage = 'mallEvil';
 						var bg:FlxSprite = new FlxSprite(-400, -500).loadGraphic(Paths.image('christmas/evilBG','week5'));
-						if (FlxG.save.data.anliasting)
-							{
-								bg.antialiasing = true;
-							}
-						if (!FlxG.save.data.anliasting)
-							{
-								bg.antialiasing = false;
-							}
+						if (FlxG.save.data.antialiasing)
+							bg.antialiasing = true;
 						bg.scrollFactor.set(0.2, 0.2);
 						bg.active = false;
 						bg.setGraphicSize(Std.int(bg.width * 0.8));
@@ -634,27 +570,15 @@ class PlayState extends MusicBeatState
 						if(FlxG.save.data.bgHigh){
 						{
 							var evilTree:FlxSprite = new FlxSprite(300, -300).loadGraphic(Paths.image('christmas/evilTree','week5'));
-							if (FlxG.save.data.anliasting)
-								{
-									evilTree.antialiasing = true;
-								}
-							if (!FlxG.save.data.anliasting)
-								{
-									evilTree.antialiasing = false;
-								}
+							if (FlxG.save.data.antialiasing)
+								evilTree.antialiasing = true;
 							evilTree.scrollFactor.set(0.2, 0.2);
 							add(evilTree);
 						}
 
 						var evilSnow:FlxSprite = new FlxSprite(-200, 700).loadGraphic(Paths.image("christmas/evilSnow",'week5'));
-						if (FlxG.save.data.anliasting)
-							{
-								evilSnow.antialiasing = true;
-							}
-						if (!FlxG.save.data.anliasting)
-							{
-								evilSnow.antialiasing = false;
-							}
+						if (FlxG.save.data.antialiasing)
+							evilSnow.antialiasing = true;
 						add(evilSnow);
 						}
 				}
@@ -756,14 +680,8 @@ class PlayState extends MusicBeatState
 							defaultCamZoom = 0.9;
 							curStage = 'stage';
 							var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-							if (FlxG.save.data.anliasting)
-								{
-									bg.antialiasing = true;
-								}
-							if (!FlxG.save.data.anliasting)
-								{
-									bg.antialiasing = false;
-								}
+							if (FlxG.save.data.antialiasing)
+								bg.antialiasing = true;
 							bg.scrollFactor.set(0.9, 0.9);
 							bg.active = false;
 							add(bg);
@@ -771,14 +689,8 @@ class PlayState extends MusicBeatState
 							var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
 							stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 							stageFront.updateHitbox();
-							if (FlxG.save.data.anliasting)
-								{
-									stageFront.antialiasing = true;
-								}
-							if (!FlxG.save.data.anliasting)
-								{
-									stageFront.antialiasing = false;
-								}
+							if (FlxG.save.data.antialiasing)
+								stageFront.antialiasing = true;
 							stageFront.scrollFactor.set(0.9, 0.9);
 							stageFront.active = false;
 							add(stageFront);
@@ -787,14 +699,8 @@ class PlayState extends MusicBeatState
 								var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
 								stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 								stageCurtains.updateHitbox();
-								if (FlxG.save.data.anliasting)
-									{
-										stageCurtains.antialiasing = true;
-									}
-								if (!FlxG.save.data.anliasting)
-									{
-										stageCurtains.antialiasing = false;
-									}
+								if (FlxG.save.data.antialiasing)
+									stageCurtains.antialiasing = true;
 								stageCurtains.scrollFactor.set(1.3, 1.3);
 								stageCurtains.active = false;
 			
@@ -806,14 +712,8 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.9;
 						curStage = 'stage';
 						var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
-						if (FlxG.save.data.anliasting)
-							{
-								bg.antialiasing = true;
-							}
-						if (!FlxG.save.data.anliasting)
-							{
-								bg.antialiasing = false;
-							}
+						if (FlxG.save.data.antialiasing)
+							bg.antialiasing = true;
 						bg.scrollFactor.set(0.9, 0.9);
 						bg.active = false;
 						add(bg);
@@ -821,14 +721,8 @@ class PlayState extends MusicBeatState
 						var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
 						stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 						stageFront.updateHitbox();
-						if (FlxG.save.data.anliasting)
-							{
-								stageFront.antialiasing = true;
-							}
-						if (!FlxG.save.data.anliasting)
-							{
-								stageFront.antialiasing = false;
-							}
+						if (FlxG.save.data.antialiasing)
+							stageFront.antialiasing = true;
 						stageFront.scrollFactor.set(0.9, 0.9);
 						stageFront.active = false;
 						add(stageFront);
@@ -837,14 +731,8 @@ class PlayState extends MusicBeatState
 							var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
 							stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 							stageCurtains.updateHitbox();
-							if (FlxG.save.data.anliasting)
-								{
-									stageCurtains.antialiasing = true;
-								}
-							if (!FlxG.save.data.anliasting)
-								{
-									stageCurtains.antialiasing = false;
-								}
+							if (FlxG.save.data.antialiasing)
+								stageCurtains.antialiasing = true;
 							stageCurtains.scrollFactor.set(1.3, 1.3);
 							stageCurtains.active = false;
 
@@ -1649,7 +1537,8 @@ class PlayState extends MusicBeatState
 
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * daPixelZoom));
 					babyArrow.updateHitbox();
-					babyArrow.antialiasing = false;
+					if (FlxG.save.data.antialiasing)
+						babyArrow.antialiasing = true;
 
 					switch (Math.abs(i))
 					{
@@ -1682,7 +1571,8 @@ class PlayState extends MusicBeatState
 						babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 						babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 		
-						babyArrow.antialiasing = true;
+						if (FlxG.save.data.antialiasing)
+							babyArrow.antialiasing = true;
 						babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 		
 						switch (Math.abs(i))
@@ -1716,7 +1606,8 @@ class PlayState extends MusicBeatState
 						babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 						babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 	
-						babyArrow.antialiasing = true;
+						if (FlxG.save.data.antialiasing)
+							babyArrow.antialiasing = true;
 						babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 	
 						switch (Math.abs(i))
@@ -2941,23 +2832,11 @@ class PlayState extends MusicBeatState
 			if (!curStage.startsWith('school'))
 			{
 				rating.setGraphicSize(Std.int(rating.width * 0.7));
-				if (FlxG.save.data.anliasting)
-					{
-						rating.antialiasing = true;
-					}
-				if (!FlxG.save.data.anliasting)
-					{
-						rating.antialiasing = false;
-					}
+				if (FlxG.save.data.antialiasing)
+					rating.antialiasing = true;
 				comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-				if (FlxG.save.data.anliasting)
-					{
-						comboSpr.antialiasing = true;
-					}
-				if (!FlxG.save.data.anliasting)
-					{
-						comboSpr.antialiasing = false;
-					}
+				if (FlxG.save.data.antialiasing)
+					comboSpr.antialiasing = true;
 			}
 			else
 			{
@@ -2981,14 +2860,14 @@ class PlayState extends MusicBeatState
 					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('UIshit/noteSplashes', 'dreamland');
 					sploosh.frames = tex;
 					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
-					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1 blue', 24, false);
+					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1  blue', 24, false);
 					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
 					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
 					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
 					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
 					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
 					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
-					if (daRating == 'sick')
+					if (daRating == 'sick' || daRating == 'dots')
 					{
 						add(sploosh);
 						sploosh.cameras = [camHUD];
@@ -2998,7 +2877,7 @@ class PlayState extends MusicBeatState
 						sploosh.offset.y += 80;
 						sploosh.animation.finishCallback = function(name) sploosh.kill();
 					}
-					else if (FlxG.save.data.botplay && daRating == 'good')
+					else if (FlxG.save.data.botplay && daRating == 'nice' || FlxG.save.data.botplay && daRating == 'dots')
 					{
 						add(sploosh);
 						sploosh.cameras = [camHUD];
@@ -3071,14 +2950,8 @@ class PlayState extends MusicBeatState
 
 				if (!curStage.startsWith('school'))
 				{
-					if (FlxG.save.data.anliasting)
-						{
-							numScore.antialiasing = true;
-						}
-					if (!FlxG.save.data.anliasting)
-						{
-							numScore.antialiasing = false;
-						}
+					if (FlxG.save.data.antialiasing)
+						numScore.antialiasing = true;
 					numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 				}
 				else

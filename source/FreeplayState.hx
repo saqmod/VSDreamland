@@ -68,11 +68,13 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('parkDesat', 'dreamland'));
-		if (curSelected == 0)
-			bg.color = FlxColor.CYAN;
-		else if (curSelected == 1 || curSelected == 3)
-			bg.color = 0x88ff88;
+		var bg:FlxSprite;
+		if (!FlxG.save.data.liteMenu)
+			bg = new FlxSprite().loadGraphic(Paths.image('blue', 'dreamland'));
+		else
+			bg = new FlxSprite().loadGraphic(Paths.image('parkCyan', 'dreamland'));
+		if (FlxG.save.data.antialiasing)
+			bg.antialiasing = true;
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -236,11 +238,11 @@ class FreeplayState extends MusicBeatState
 		switch (curDifficulty)
 		{
 			case 0:
-				diffText.text = "EASY";
+				diffText.text = "< EASY >";
 			case 1:
-				diffText.text = 'NORMAL';
+				diffText.text = '< NORMAL >';
 			case 2:
-				diffText.text = "HARD";
+				diffText.text = "< HARD >";
 		}
 	}
 

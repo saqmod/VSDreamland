@@ -24,11 +24,12 @@ class StoryMenuState extends MusicBeatState
 	var scoreText:FlxText;
 
 	var yellowBG:FlxSprite;
+	var weekPictures:FlxSprite;
 
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
 		['Lucid Dreams'],
-		['Nothing']
+		['Senpai']
 	];
 	var curDifficulty:Int = 1;
 
@@ -43,7 +44,7 @@ class StoryMenuState extends MusicBeatState
 	var weekNames:Array<String> = [
 		"Tutorial",
 		"Yumi",
-		"French zombie"
+		"Bat"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -94,7 +95,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
-		yellowBG = new FlxSprite(0, 56).loadGraphic(Paths.image('storyBG/week' + Std.string(curWeek), 'dreamland'));
+		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -138,7 +139,6 @@ class StoryMenuState extends MusicBeatState
 		grpWeekCharacters.add(new MenuCharacter(0, 100, 0.5, false));
 		grpWeekCharacters.add(new MenuCharacter(450, 25, 0.9, true));
 		grpWeekCharacters.add(new MenuCharacter(850, 100, 0.5, true));
-		grpWeekCharacters.visible = false;
 
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
@@ -197,7 +197,7 @@ class StoryMenuState extends MusicBeatState
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
-		if (curWeek == 0)
+		if (curWeek == 2)
 			yellowBG.visible = false
 		else
 			yellowBG.visible = true;
@@ -351,8 +351,6 @@ class StoryMenuState extends MusicBeatState
 			curWeek = 0;
 		if (curWeek < 0)
 			curWeek = weekData.length - 1;
-
-		yellowBG.updateHitbox();
 
 		var bullShit:Int = 0;
 

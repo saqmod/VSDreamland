@@ -39,10 +39,12 @@ class CreditsState extends MusicBeatState
 		FlxG.sound.music.stop();
 		FlxG.sound.playMusic(Paths.music('breakfast'));
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('week54prototype', 'shared'));
+		
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image((FlxG.random.bool(10) ? 'EasterEggsLmfao/Go pico yeah yeah' : 'bgmenuNight'), 'dreamland'));
 		bg.scale.x *= 1.55;
 		bg.scale.y *= 1.55;
 		bg.screenCenter();
+		add(bg);
 
 		if (FlxG.random.bool(50))
 			daChar = new Character(100, 100, 'bat')

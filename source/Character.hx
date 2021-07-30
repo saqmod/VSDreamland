@@ -26,7 +26,8 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 
 		var tex:FlxAtlasFrames;
-		antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+			antialiasing = true;
 
 		switch (curCharacter)
 		{
@@ -120,7 +121,8 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
@@ -233,8 +235,16 @@ class Character extends FlxSprite
 				tex = Paths.getSparrowAtlas('characters/batBETA', 'dreamland');
 				frames = tex;
 				animation.addByPrefix('idle', 'bat idle', 24, false);
+				animation.addByPrefix('singUP', 'bat goes up', 24, false);
+				animation.addByPrefix('singDOWN', 'bat goes down', 24, false);
+				animation.addByPrefix('singLEFT', 'bat goes left', 24, false);
+				animation.addByPrefix('singRIGHT', 'bat goes right', 24, false);
 
-				addOffset('idle');
+				addOffset('idle', 0, 65);
+				addOffset("singUP", 0, 74);
+				addOffset("singRIGHT", -15, 65);
+				addOffset("singLEFT", 5, 67);
+				addOffset("singDOWN", 0, 65);
 
 				playAnim('idle');
 				trace('this is not cute');
@@ -418,7 +428,8 @@ class Character extends FlxSprite
 				width -= 100;
 				height -= 100;
 
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 
 				flipX = true;
 			case 'bf-pixel-dead':
@@ -436,7 +447,8 @@ class Character extends FlxSprite
 				// pixel bullshit
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 				flipX = true;
 
 			case 'senpai':
@@ -457,8 +469,8 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 			case 'senpai-angry':
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
@@ -476,8 +488,8 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
-
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 
 			case 'spirit':
 				frames = Paths.getPackerAtlas('characters/spirit');
@@ -497,8 +509,8 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				playAnim('idle');
-
-				antialiasing = false;
+				if (FlxG.save.data.antialiasing)
+					antialiasing = false;
 
 			case 'parents-christmas':
 				frames = Paths.getSparrowAtlas('characters/mom_dad_christmas_assets');
@@ -525,6 +537,9 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+					antialiasing = true;
 		}
 
 		dance();
@@ -571,6 +586,9 @@ class Character extends FlxSprite
 				holdTimer = 0;
 			}
 		}
+
+		if(FlxG.save.data.happi)
+			curCharacter == 'yumi';
 
 		switch (curCharacter)
 		{

@@ -11,6 +11,7 @@ import openfl.Lib;
 class OptionCategory
 {
 	private var _options:Array<Option> = new Array<Option>();
+
 	public final function getOptions():Array<Option>
 	{
 		return _options;
@@ -294,9 +295,77 @@ class MenuOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return 'Lite menu ' + (!FlxG.save.data.liteMenu ? "off" : "on");
+		return 'Classic menu ' + (!FlxG.save.data.liteMenu ? "off" : "on");
 	}
 
+}
+
+class HappiOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.happi = !FlxG.save.data.happi;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'happi ' + (!FlxG.save.data.happi ? "off" : "on");
+	}
+
+}
+
+class CharPreload extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.cacheImages = !FlxG.save.data.cacheImages;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Preload characters ' + (!FlxG.save.data.cacheImages ? "off" : "on");
+	}
+
+}
+
+class Antialiasing extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.antialiasing = !FlxG.save.data.antialiasing;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Antialiasing ' + (!FlxG.save.data.antialiasing ? "off" : "on");
+	}
 }
 
 class DownscrollOption extends Option

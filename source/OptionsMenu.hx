@@ -41,11 +41,13 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Appearance", [
 			#if desktop
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
+			new CharPreload('Character preload (KE 1.6 option)'),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new SongPositionOption("Show the songs current position (as a bar)"),
 			new CpuStrums("CPU's strumline lights up when a note hits it."),
+			new Antialiasing("Toggle antialiasing")
 			#else
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay.")
 			#end
@@ -72,8 +74,20 @@ class OptionsMenu extends MusicBeatState
 			new MenuOption("Lite menu | Classic menu"),
 			new InfoText("Information"),
 			new AltPause("Alternative (Secret) Pause in 100% chance")
+		]),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("\n", []),
+		new OptionCategory("Secret", [
+			new HappiOption("Happi")
 		])
-		
 	];
 
 	public var acceptInput:Bool = true;
@@ -87,9 +101,12 @@ class OptionsMenu extends MusicBeatState
 	override function create()
 	{
 		instance = this;
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
 
-		menuBG.color = 0xFFea71fd;
+		var menuBG:FlxSprite;
+		if (!FlxG.save.data.liteMenu)
+			menuBG = new FlxSprite().loadGraphic(Paths.image('blue', 'dreamland'));
+		else
+			menuBG = new FlxSprite().loadGraphic(Paths.image('parkCherry', 'dreamland'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();

@@ -69,7 +69,8 @@ class MainMenuState extends MusicBeatState
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+			bg.antialiasing = true;
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -78,15 +79,39 @@ class MainMenuState extends MusicBeatState
 		if (!FlxG.save.data.liteMenu)
 			magenta = new FlxSprite(-100).loadGraphic(Paths.image('blue', 'dreamland'));
 		else
-			magenta = new FlxSprite(-100).loadGraphic(Paths.image('parkMagenta', 'dreamland'));	
+			magenta = new FlxSprite(-100).loadGraphic(Paths.image('parkCherry', 'dreamland'));	
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.10;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
 		magenta.updateHitbox();
 		magenta.screenCenter();
 		magenta.visible = false;
-		magenta.antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+			magenta.antialiasing = true;
 		add(magenta);
+
+		if(!FlxG.save.data.liteMenu) {
+		var logotype:FlxSprite = new FlxSprite(FlxG.width, 0);
+		logotype.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
+		logotype.animation.addByPrefix('bump', 'logo bumpin', 24);
+		logotype.animation.play('bump');
+		logotype.x -= logotype.frameHeight;
+		logotype.y -= 180;
+		logotype.scale.y = 0.3;
+		logotype.scale.x = 0.3;
+		if (FlxG.save.data.antialiasing)
+			logotype.antialiasing = true;
+		add(logotype);
+
+		var gf:FlxSprite = new FlxSprite(600, 100);
+		gf.frames = Paths.getSparrowAtlas('GF_CLOUD', 'dreamland');
+		gf.animation.addByPrefix('sleep', 'GF Dancing Beat', 24);
+		gf.animation.play('sleep');
+		gf.scale.y = 0.3;
+		gf.scale.x = 0.3;
+		if (FlxG.save.data.antialiasing)
+			gf.antialiasing = true;
+		add(gf); }
 		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();

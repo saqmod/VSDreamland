@@ -130,14 +130,16 @@ class Note extends FlxSprite
 
 					setGraphicSize(Std.int(width * 0.7));
 					updateHitbox();
-					antialiasing = true;
+					if (FlxG.save.data.antialiasing)
+						antialiasing = true;
 			}
 		}else {
 			loadGraphic(Paths.image('UIshit/warningNote', 'dreamland'), true, 157, 154);
 			animation.add('warnScroll', [0]);
 			setGraphicSize(Std.int(width * 0.7));
 			updateHitbox();
-			antialiasing = true;
+			if (FlxG.save.data.antialiasing)
+				antialiasing = true;
 		}
 
 		if(!warning) {
