@@ -38,7 +38,7 @@ class MainMenuState extends MusicBeatState
 	public static var nightly:String = "";
 
 	public static var gameVer:String = "0.2.7.1";
-	public static var modVer:String = "INDEV";
+	public static var modVer:String = '0.0.0.4/INDEV';
 	public static var kadeEngineVer:String = "CUSTOM BUILD";
 
 	var magenta:FlxSprite;
@@ -63,7 +63,7 @@ class MainMenuState extends MusicBeatState
 		if (!FlxG.save.data.liteMenu)
 			bg = new FlxSprite(-100).loadGraphic(Paths.image('blue', 'dreamland'));
 		else
-			bg = new FlxSprite(-100).loadGraphic(Paths.image('parkYellow', 'dreamland'));			
+			bg = new FlxSprite(-100).loadGraphic(Paths.image('menuYellow', 'dreamland'));			
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.10;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -79,7 +79,7 @@ class MainMenuState extends MusicBeatState
 		if (!FlxG.save.data.liteMenu)
 			magenta = new FlxSprite(-100).loadGraphic(Paths.image('blue', 'dreamland'));
 		else
-			magenta = new FlxSprite(-100).loadGraphic(Paths.image('parkCherry', 'dreamland'));	
+			magenta = new FlxSprite(-100).loadGraphic(Paths.image('menuCherry', 'dreamland'));	
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.10;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
@@ -99,6 +99,7 @@ class MainMenuState extends MusicBeatState
 		logotype.y -= 180;
 		logotype.scale.y = 0.3;
 		logotype.scale.x = 0.3;
+		logotype.scrollFactor.set();
 		if (FlxG.save.data.antialiasing)
 			logotype.antialiasing = true;
 		add(logotype);
@@ -109,6 +110,7 @@ class MainMenuState extends MusicBeatState
 		gf.animation.play('sleep');
 		gf.scale.y = 0.3;
 		gf.scale.x = 0.3;
+		gf.scrollFactor.set();
 		if (FlxG.save.data.antialiasing)
 			gf.antialiasing = true;
 		add(gf); }

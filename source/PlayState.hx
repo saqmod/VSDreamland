@@ -255,6 +255,9 @@ class PlayState extends MusicBeatState
 		executeModchart = false; // FORCE disable for non cpp targets
 		#end
 
+		if (executeModchart)
+			FlxG.save.data.optimization = false;
+
 		trace('Mod chart: ' + executeModchart + " - " + Paths.lua(PlayState.SONG.song.toLowerCase() + "/modchart"));
 
 		#if windows
@@ -324,23 +327,6 @@ class PlayState extends MusicBeatState
 		//dialogue shit
 		switch (SONG.song.toLowerCase())
 		{
-			case 'tutorial':
-				dialogue = ["Hey you're pretty cute.", 'Use the arrow keys to keep up \nwith me singing.'];
-			case 'bopeebo':
-				dialogue = [
-					'HEY!',
-					"You think you can just sing\nwith my daughter like that?",
-					"If you want to date her...",
-					"You're going to have to go \nthrough ME first!"
-				];
-			case 'fresh':
-				dialogue = ["Not too shabby boy.", ""];
-			case 'dad battle':
-				dialogue = [
-					"gah you think you're hot stuff?",
-					"If you can beat me here...",
-					"Only then I will even CONSIDER letting you\ndate my daughter!"
-				];
 			case 'senpai':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
 			case 'roses':
@@ -885,8 +871,8 @@ class PlayState extends MusicBeatState
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
 
-		playerStrums = new FlxTypedGroup<FlxSprite>();
-		cpuStrums = new FlxTypedGroup<FlxSprite>();
+		playerStrums = new FlxTypedGroup<FlxSprite>(20);
+		cpuStrums = new FlxTypedGroup<FlxSprite>(-20);
 
 		// startCountdown();
 
@@ -977,7 +963,7 @@ class PlayState extends MusicBeatState
 
 		if (offsetTesting)
 			scoreTxt.x += 300;
-		if(FlxG.save.data.botplay) scoreTxt.x = FlxG.width / 2 - 20;													  
+		if(FlxG.save.data.botplay) scoreTxt.x = FlxG.width / 2 - 20;	
 		add(scoreTxt);
 		infoTxt = new FlxText(0, -300, 0, "", 20);
 		infoTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -1453,6 +1439,10 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+
+				if (!gottaHitNote && FlxG.save.data.optimization)
+					continue;
+
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -1512,6 +1502,9 @@ class PlayState extends MusicBeatState
 
 			//defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
+
+			if (FlxG.save.data.optimization && player == 0)
+				continue;
 		
 			if (FlxG.save.data.pixelNotes)
 			{
@@ -1647,6 +1640,7 @@ class PlayState extends MusicBeatState
 
 			babyArrow.ID = i;
 
+
 			switch (player)
 			{
 				case 0:
@@ -1655,14 +1649,14 @@ class PlayState extends MusicBeatState
 					playerStrums.add(babyArrow);
 			}
 
+
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
 
-			if (FlxG.save.data.middlescroll){
-				babyArrow.x -= 275; }
-			else {
-				trace('No middlescroll'); }
+			if (FlxG.save.data.optimization){
+				babyArrow.x -= 275;
+			}
 			
 			cpuStrums.forEach(function(spr:FlxSprite)
 			{					
@@ -1761,9 +1755,17 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
+		if(FlxG.keys.justPressed.SPACE)
+			boyfriend.animation.play('dodge');
+
 		if (FlxG.save.data.optimization)
 		{
 			FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
+		}
+
+		if(FlxG.save.data.happi)
+		{
+			SONG.player2 = 'yumi';
 		}
 
 		if (healthBar.percent < 20)
@@ -1874,7 +1876,7 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'philly':
-				if (trainMoving)
+				if (trainMoving && !FlxG.save.data.optimization)
 				{
 					trainFrameTiming += elapsed;
 
@@ -1939,22 +1941,19 @@ class PlayState extends MusicBeatState
 			if (health > 3)
 				health = 3;
 
-		if (healthBar.percent < 20)
-			iconP1.animation.curAnim.curFrame = 1;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
-			iconP2.animation.curAnim.curFrame = 0;
-
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else if (healthBar.percent < 20)
-			if (dad.curCharacter == 'yumi')
-				iconP2.animation.curAnim.curFrame = 2;
-			else
-				iconP2.animation.curAnim.curFrame = 0
-		else
-			iconP2.animation.curAnim.curFrame = 0;
-			iconP1.animation.curAnim.curFrame = 0;
+			if (healthBar.percent < 20){
+				iconP1.animation.curAnim.curFrame = 1;
+				if(dad.curCharacter == 'yumi')
+					iconP2.animation.curAnim.curFrame = 2;
+			}
+			else if (healthBar.percent > 80){
+				iconP2.animation.curAnim.curFrame = 1;
+				iconP1.animation.curAnim.curFrame = 2;
+			}
+			else{
+				iconP2.animation.curAnim.curFrame = 0;
+				iconP1.animation.curAnim.curFrame = 0;
+			}
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
@@ -2306,7 +2305,7 @@ class PlayState extends MusicBeatState
 					if (daNote.tooLate)
 					{
 						if(daNote.warning) 
-							health -= 2;
+							smash = true;
 						daNote.active = false;
 						daNote.visible = false;
 					}
@@ -2429,6 +2428,11 @@ class PlayState extends MusicBeatState
 									spr.centerOffsets();
 							});
 						}
+
+						if (healthBar.percent >= 10 && dad.curCharacter.startsWith('bat'))
+						{
+							health -= 0.025;
+						}
 	
 						#if windows
 						if (luaModchart != null)
@@ -2476,7 +2480,7 @@ class PlayState extends MusicBeatState
 	
 					if ((daNote.mustPress && daNote.tooLate && !FlxG.save.data.downscroll || daNote.mustPress && daNote.tooLate && FlxG.save.data.downscroll) && daNote.mustPress)
 					{
-						if (daNote.isSustainNote && daNote.wasGoodHit)
+						if (daNote.isSustainNote && daNote.wasGoodHit || daNote.isSustainNote && daNote.wasGoodHit && daNote.warning)
 						{
 							daNote.kill();
 							notes.remove(daNote, true);
@@ -2522,7 +2526,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	function endSong():Void
+	public function endSong():Void
 	{
 		blubolls = 0;
 		if (!loadRep)
@@ -3152,6 +3156,7 @@ class PlayState extends MusicBeatState
 								if (pressArray[shit])
 									noteMiss(shit, null);
 						}
+
 
 					if(dontCheck && possibleNotes.length > 0 && FlxG.save.data.ghost && !FlxG.save.data.botplay)
 					{

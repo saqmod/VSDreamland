@@ -16,10 +16,10 @@ import flixel.util.FlxColor;
 
 class PauseSubState extends MusicBeatSubstate
 {
-	var grpMenuShit:FlxTypedGroup<Alphabet>;
+	var grpMenuShit:FlxTypedGroup<AlphabetDreamland>;
 
 	var diffChange:Bool = false;
-	var menuItems:Array<String> = [ 'Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
 
 	var curSelected:Int = 0;
 
@@ -29,17 +29,24 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
+		if (PlayState.storyPlaylist.length > 1 && PlayState.isStoryMode){
+			menuItems.insert(2, "Skip Song");
+		}
+
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
 		FlxG.sound.list.add(pauseMusic);
 
+		var pause:FlxSprite = new FlxSprite().loadGraphic(Paths.image('paused', 'dreamland'));
+		pause.scrollFactor.set();
 		var bg:FlxSprite;
 		bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
+		add(pause);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
@@ -65,12 +72,12 @@ class PauseSubState extends MusicBeatSubstate
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 
-		grpMenuShit = new FlxTypedGroup<Alphabet>();
+		grpMenuShit = new FlxTypedGroup<AlphabetDreamland>();
 		add(grpMenuShit);
 
 		for (i in 0...menuItems.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
+			var songText:AlphabetDreamland = new AlphabetDreamland(0, (70 * i) + 30, menuItems[i], true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpMenuShit.add(songText);
@@ -113,6 +120,8 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.resetState();
 				case "Change difficulty":
 					diffChange = true;
+				case "Skip Song":
+					PlayState.instance.endSong();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 					PlayState.blubolls = 0;

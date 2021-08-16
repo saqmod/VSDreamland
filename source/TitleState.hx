@@ -23,6 +23,7 @@ import flixel.util.FlxTimer;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
+import SaveData.Save;
 
 #if windows
 import Discord.DiscordClient;
@@ -51,9 +52,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
+		//#if polymod
+		//polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
+		//#end
 		
 		#if sys
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
@@ -89,7 +90,8 @@ class TitleState extends MusicBeatState
 		trace('NEWGROUNDS LOL');
 		#end
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		Save.bind('funkin', 'ninjamuffin99');
+		Save.saveInFile('dumb', 'test');
 
 		KadeEngineData.initSave();
 
@@ -155,22 +157,31 @@ class TitleState extends MusicBeatState
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(104);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('bgMenuDay', 'dreamland'));
+		var clouds:FlxSprite = new FlxSprite(-100);
+		clouds.frames = Paths.getSparrowAtlas('clouds', 'dreamland');
+		clouds.animation.addByPrefix('clouds', 'all clouds 2', 24, true);
+		clouds.animation.play('clouds');
+		clouds.antialiasing = true;
+		clouds.setGraphicSize(Std.int(bg.width * 1.1));
+		clouds.updateHitbox();
+		clouds.screenCenter();		
 		bg.antialiasing = true;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
 		add(bg);
+		add(clouds);
 
-		logoBl = new FlxSprite(-150, 0);
+		logoBl = new FlxSprite(-150, 1500);
 		logoBl.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
-		logoBl.screenCenter();
+		logoBl.screenCenter(X);
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
@@ -221,6 +232,14 @@ class TitleState extends MusicBeatState
 		gedonLogo.updateHitbox();
 		gedonLogo.screenCenter(X);
 		gedonLogo.antialiasing = true;
+	
+		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo', 'dreamland'));
+		add(ngSpr);
+		ngSpr.visible = false;
+		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
+		ngSpr.updateHitbox();
+		ngSpr.screenCenter(X);
+		ngSpr.antialiasing = true;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -344,7 +363,7 @@ class TitleState extends MusicBeatState
 	{
 		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
+			var money:AlphabetDreamland = new AlphabetDreamland(0, 0, textArray[i], true, false);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
@@ -356,7 +375,7 @@ class TitleState extends MusicBeatState
 
 	function addMoreText(text:String)
 	{
-		var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
+		var coolText:AlphabetDreamland = new AlphabetDreamland(0, 0, text, true, false);
 		coolText.screenCenter(X);
 		coolText.y += (textGroup.length * 60) + 200;
 		credGroup.add(coolText);
@@ -383,6 +402,8 @@ class TitleState extends MusicBeatState
 		gfDance.animation.play('dance');
 
 		FlxG.log.add(curBeat);
+
+		FlxG.camera.zoom = flixel.math.FlxMath.lerp(1.05, FlxG.camera.zoom, 0.95);
 
 		switch (curBeat)
 		{
@@ -415,18 +436,22 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'Shoutouts Tom Fulp';
 			// credTextShit.screenCenter();
 			case 9:
-				createCoolText([curWacky[0]]);
+				addMoreText('Newgrounds');
 			// credTextShit.visible = true;
 			case 11:
+				addMoreText('is cool');
+				ngSpr.visible = true;
+			case 12:
+				ngSpr.visible = false;
+				deleteCoolText();
+				createCoolText([curWacky[0]]);
+			case 13:
 				addMoreText(curWacky[1]);
 			// credTextShit.text += '\nlmao';
-			case 12:
+			case 14:
 				deleteCoolText();
 				addMoreText('Friday');
-			case 13:
 				addMoreText('Night');
-			// credTextShit.visible = true;
-			case 14:
 				addMoreText('Funkin');
 			// credTextShit.text += '\nNight';
 			case 15:
@@ -444,6 +469,18 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
+
+			FlxTween.tween(logoBl,{y: 0}, 1.4, {ease: FlxEase.expoInOut});
+
+			logoBl.angle = -4;
+
+			new FlxTimer().start(0.01, function(tmr:FlxTimer)
+				{
+					if(logoBl.angle == -4) 
+						FlxTween.angle(logoBl, logoBl.angle, 4, 4, {ease: FlxEase.quartInOut});
+					if (logoBl.angle == 4) 
+						FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
+				}, 0);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);

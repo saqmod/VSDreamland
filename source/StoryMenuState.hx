@@ -28,23 +28,23 @@ class StoryMenuState extends MusicBeatState
 
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
-		['Lucid Dreams'],
-		['Senpai']
+		['Lucid Dreams', 'Newfound Angel'],
+		['Stress']
 	];
 	var curDifficulty:Int = 1;
 
-	public static var weekUnlocked:Array<Bool> = [true, true, false];
+	public static var weekUnlocked:Array<Bool> = [true, true, true];
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
 		['dad', 'bf', 'gf'],
-		['spooky', 'bf', 'gf']
+		['', '', '']
 	];
 
 	var weekNames:Array<String> = [
 		"Tutorial",
 		"Yumi",
-		"Bat"
+		'B A T'
 	];
 
 	var txtWeekTitle:FlxText;

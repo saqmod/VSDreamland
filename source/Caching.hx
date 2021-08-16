@@ -39,6 +39,7 @@ class Caching extends MusicBeatState
 
 	var text:FlxText;
 	var kadeLogo:FlxSprite;
+	var versionShit:FlxText;
 
 	public static var bitmapData:Map<String,FlxGraphic>;
 
@@ -67,22 +68,28 @@ class Caching extends MusicBeatState
 		text.alignment = FlxTextAlign.CENTER;
 		text.alpha = 0;
 
-		kadeLogo = new FlxSprite(FlxG.width / 2, FlxG.height / 2).loadGraphic(Paths.image((FlxG.random.bool(20) ? 'EasterEggsLmfao/daSmoJorclai' : 'Vs_Dreamland_logo'), 'dreamland'));
+		versionShit = new FlxText(5, FlxG.height - 29, 0, 'v' + MainMenuState.gameVer, 12);
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.scrollFactor.set();
+
+		kadeLogo = new FlxSprite(FlxG.width / 2, 1500).loadGraphic(Paths.image((FlxG.random.bool(20) ? 'EasterEggsLmfao/daSmolJorclai' : 'Vs_Dreamland_logo'), 'dreamland'));
 		kadeLogo.x -= kadeLogo.width / 2;
 		kadeLogo.y -= kadeLogo.height / 2 + 100;
 		text.y -= kadeLogo.height / 2 - 125;
 		text.x -= 170;
 		kadeLogo.setGraphicSize(Std.int(kadeLogo.width * 0.6));
-		kadeLogo.antialiasing = true;
+		kadeLogo.antialiasing = false;
+
+		FlxTween.tween(kadeLogo,{y: 100}, 1.4, {ease:FlxEase.expoInOut});
 		
 		kadeLogo.alpha = 0;
 
 		#if cpp
-		if (FlxG.save.data.cacheImages)
+		if (FlxG.save.data.cecheImages)
 		{
 			trace("caching images...");
 
-			for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters")))
+			for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/dreamland/images/characters")))
 			{
 				if (!i.endsWith(".png"))
 					continue;
@@ -107,6 +114,7 @@ class Caching extends MusicBeatState
 
 		add(kadeLogo);
 		add(text);
+		add(versionShit);
 
 		trace('starting caching..');
 		
@@ -175,6 +183,8 @@ class Caching extends MusicBeatState
 		loaded = true;
 
 		trace(Assets.cache.hasBitmapData('GF_assets'));
+
+		text.text = 'Done!';
 
 		FlxG.switchState(new TitleState());
 	}

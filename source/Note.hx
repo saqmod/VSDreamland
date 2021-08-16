@@ -9,6 +9,7 @@ import flixel.util.FlxColor;
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;
 #end
+import Section.SwagSection;
 import PlayState;
 
 using StringTools;
@@ -135,36 +136,26 @@ class Note extends FlxSprite
 			}
 		}else {
 			loadGraphic(Paths.image('UIshit/warningNote', 'dreamland'), true, 157, 154);
-			animation.add('warnScroll', [0]);
 			setGraphicSize(Std.int(width * 0.7));
 			updateHitbox();
 			if (FlxG.save.data.antialiasing)
 				antialiasing = true;
 		}
 
-		if(!warning) {
-			switch (noteData)
-			{
-				case 0:
-					x += swagWidth * 0;
-					animation.play('purpleScroll');
-				case 1:
-					x += swagWidth * 1;
-					animation.play('blueScroll');
-				case 2:
-					x += swagWidth * 2;
-					animation.play('greenScroll');
-				case 3:
-					x += swagWidth * 3;
-					animation.play('redScroll');
-			} }
-		else {
-			switch (noteData)
-			{
-				case 0:
-					x += swagWidth * noteData;
-					animation.play('warnScroll');
-			}
+		switch (noteData)
+		{
+			case 0:
+				x += swagWidth * 0;
+				animation.play('purpleScroll');
+			case 1:
+				x += swagWidth * 1;
+				animation.play('blueScroll');
+			case 2:
+				x += swagWidth * 2;
+				animation.play('greenScroll');
+			case 3:
+				x += swagWidth * 3;
+				animation.play('redScroll');
 		}
 
 		// trace(prevNote);

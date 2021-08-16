@@ -406,6 +406,7 @@ class ChartingState extends MusicBeatState
 	var check_changeBPM:FlxUICheckBox;
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
+	var check_altNote:FlxUICheckBox;
 
 	function addSectionUI():Void
 	{
@@ -1215,11 +1216,14 @@ class ChartingState extends MusicBeatState
 			var daSus = i[2];
 
 			var note:Note = new Note(daStrumTime, daNoteInfo % 4);
-			note.sustainLength = daSus;
+			note.warning = daNoteInfo > 7;
+			if(daNoteInfo > 7)
+				note.warning = true;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
 			note.x = Math.floor(daNoteInfo * GRID_SIZE);
 			note.y = Math.floor(getYfromStrum((daStrumTime - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps)));
+
 
 			if (curSelectedNote != null)
 				if (curSelectedNote[0] == note.strumTime)
@@ -1366,7 +1370,8 @@ class ChartingState extends MusicBeatState
 	private function addNote(?n:Note):Void
 	{
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
-		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
+		//Very rough way of adding burning notes, if Kade wants to make this better, go ahead.
+		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE) + (FlxG.keys.pressed.ALT ? 8 : 0);
 		var noteSus = 0;
 
 		if (n != null)

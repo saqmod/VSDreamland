@@ -323,6 +323,52 @@ class HappiOption extends Option
 
 }
 
+class Optimize extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.optimization = !FlxG.save.data.optimization;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Optimization' + (!FlxG.save.data.optimization ? "off" : "on");
+	}
+
+}
+
+class PixelOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.pixelNotes = !FlxG.save.data.pixelNotes;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Pixel notes ' + (!FlxG.save.data.pixelNotes ? "off" : "on");
+	}
+
+}
+
 class CharPreload extends Option
 {
 	public function new(desc:String)

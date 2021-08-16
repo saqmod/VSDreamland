@@ -5,7 +5,7 @@ import flixel.system.FlxAssets.FlxShader;
 
 enum WiggleEffectType
 {
-	DREAMY;
+	DREAMY; // Like in dreamland
 	WAVY;
 	HEAT_WAVE_HORIZONTAL;
 	HEAT_WAVE_VERTICAL;

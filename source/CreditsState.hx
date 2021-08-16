@@ -39,15 +39,17 @@ class CreditsState extends MusicBeatState
 		FlxG.sound.music.stop();
 		FlxG.sound.playMusic(Paths.music('breakfast'));
 
+		leftState = false;
+
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image((FlxG.random.bool(10) ? 'EasterEggsLmfao/Go pico yeah yeah' : 'bgmenuNight'), 'dreamland'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image((FlxG.random.bool(10) ? 'EasterEggsLmfao/Go pico yeah yeah' : 'bgMenuNight'), 'dreamland'));
 		bg.scale.x *= 1.55;
 		bg.scale.y *= 1.55;
 		bg.screenCenter();
 		add(bg);
 
 		if (FlxG.random.bool(50))
-			daChar = new Character(100, 100, 'bat')
+			daChar = new Character(100, 100, 'bat');
 		else
 			daChar = new Character(100, 100, 'yumi');
 		add(daChar);
@@ -102,13 +104,6 @@ class CreditsState extends MusicBeatState
 		
 		new FlxTimer().start(2, function(tmr:FlxTimer)
 		{
-			FlxTween.color(bg, 2, bg.color, FlxColor.fromString(bgColors[colorRotation]));
-			if(colorRotation < (bgColors.length - 1)) colorRotation++;
-			else colorRotation = 0;
-		}, 0);
-		
-		new FlxTimer().start(2, function(tmr:FlxTimer)
-		{
 			if(kadeLogo.angle == -10) FlxTween.angle(kadeLogo, kadeLogo.angle, 10, 2, {ease: FlxEase.quartInOut});
 			else FlxTween.angle(kadeLogo, kadeLogo.angle, -10, 2, {ease: FlxEase.quartInOut});
 		}, 0);
@@ -135,9 +130,12 @@ class CreditsState extends MusicBeatState
 		var danced:Bool = false;
 		if (!danced)
 			danced = true;
+			daChar.dance();
 		if (danced)
-			daChar.playAnim('idle');
+			daChar.dance();
 			danced = false;
+		if(leftState)
+			daChar.playAnim('singLEFT');
 
 		super.update(elapsed);
 	}

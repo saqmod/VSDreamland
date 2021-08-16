@@ -285,7 +285,7 @@ class DialogueBox extends FlxSpriteGroup
 						cutsceneImage.visible = false;
 					default:
 						cutsceneImage.visible = true;
-						cutsceneImage.loadGraphic(Paths.image("cutscenes/" + curAnim, 'chared'));
+						cutsceneImage.loadGraphic(Paths.image("cutscenes/" + curAnim, 'dreamland'));
 				}
 			case 'box':
 				switch(curAnim){
@@ -321,7 +321,6 @@ class DialogueBox extends FlxSpriteGroup
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
 		curAnim = splitName[2];
-		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
 		dialogueList[0] = dialogueList[0].substr(splitName[2].length + 2).trim();
 	}
 }

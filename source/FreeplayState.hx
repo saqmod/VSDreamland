@@ -72,7 +72,7 @@ class FreeplayState extends MusicBeatState
 		if (!FlxG.save.data.liteMenu)
 			bg = new FlxSprite().loadGraphic(Paths.image('blue', 'dreamland'));
 		else
-			bg = new FlxSprite().loadGraphic(Paths.image('parkCyan', 'dreamland'));
+			bg = new FlxSprite().loadGraphic(Paths.image('menuCyan', 'dreamland'));
 		if (FlxG.save.data.antialiasing)
 			bg.antialiasing = true;
 		add(bg);
@@ -267,10 +267,6 @@ class FreeplayState extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		// lerpScore = 0;
-		#end
-
-		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 		#end
 
 		var bullShit:Int = 0;

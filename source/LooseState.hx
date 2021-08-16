@@ -25,13 +25,16 @@ class LooseState extends MusicBeatState
 		loser.frames = loseTex;
 		loser.animation.addByPrefix('lose', 'lose', 24, false);
 		loser.animation.play('lose');
+		if(FlxG.save.data.antialiasing)
+			loser.antialiasing = true;
 		add(loser);
 
 		var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(Paths.image('restart'));
 		restart.setGraphicSize(Std.int(restart.width * 0.6));
 		restart.updateHitbox();
 		restart.alpha = 0;
-		restart.antialiasing = true;
+		if(FlxG.save.data.antialiasing)
+			restart.antialiasing = true;
 		add(restart);
 
 		FlxTween.tween(restart, {alpha: 1}, 1, {ease: FlxEase.quartInOut});
@@ -43,6 +46,17 @@ class LooseState extends MusicBeatState
 		if (controls.ACCEPT)
 		{
 			FlxG.switchState(new PlayState());
+		}
+		if (controls.BACK)
+		{
+			if (PlayState.isStoryMode)
+			{
+				FlxG.switchState(new StoryMenuState());
+			}
+			else
+			{
+				FlxG.switchState(new FreeplayState());
+			}
 		}
 		super.update(elapsed);
 	}

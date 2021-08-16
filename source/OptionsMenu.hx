@@ -41,13 +41,14 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Appearance", [
 			#if desktop
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
-			new CharPreload('Character preload (KE 1.6 option)'),
+			new CharPreload('Character preload'),
+			new Optimize(''),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new SongPositionOption("Show the songs current position (as a bar)"),
 			new CpuStrums("CPU's strumline lights up when a note hits it."),
-			new Antialiasing("Toggle antialiasing")
+			new Antialiasing("Toggle the antialiasing (good for potato computers)")
 			#else
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay.")
 			#end
@@ -106,11 +107,12 @@ class OptionsMenu extends MusicBeatState
 		if (!FlxG.save.data.liteMenu)
 			menuBG = new FlxSprite().loadGraphic(Paths.image('blue', 'dreamland'));
 		else
-			menuBG = new FlxSprite().loadGraphic(Paths.image('parkCherry', 'dreamland'));
+			menuBG = new FlxSprite().loadGraphic(Paths.image('menuCherry', 'dreamland'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = true;
+		if(FlxG.save.data.antialiasing)
+			menuBG.antialiasing = true;
 		add(menuBG);
 
 		grpControls = new FlxTypedGroup<Alphabet>();
