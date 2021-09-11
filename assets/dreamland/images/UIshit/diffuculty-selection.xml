@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="diffuculty-selection.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EASY instance 10000" x="50" y="50" width="188" height="71"/>
+	<SubTexture name="HARD instance 10000" x="288" y="50" width="208" height="70"/>
+	<SubTexture name="NORMAL instance 10000" x="546" y="50" width="311" height="74"/>
+	<SubTexture name="arrow left instance 10000" x="907" y="50" width="55" height="102"/>
+	<SubTexture name="arrow push left instance 10000" x="50" y="202" width="44" height="75"/>
+	<SubTexture name="arrow push right instance 10000" x="144" y="202" width="44" height="75"/>
+	<SubTexture name="arrow right instance 10000" x="238" y="202" width="55" height="102"/>
+	<SubTexture name="lock instance 10000" x="343" y="202" width="68" height="93"/>
+</TextureAtlas>
