@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Yumi-Dance-Beat.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="yumi dance beat0000" x="50" y="50" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0001" x="803" y="50" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0002" x="1556" y="50" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0003" x="2309" y="50" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0004" x="3062" y="50" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0005" x="50" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0006" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0007" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0008" x="1556" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0009" x="1556" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0010" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0011" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0012" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0013" x="803" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0014" x="2309" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0015" x="3062" y="781" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0016" x="50" y="1512" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0017" x="803" y="1512" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0018" x="1556" y="1512" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0019" x="2309" y="1512" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0020" x="3062" y="1512" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0021" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0022" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0023" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0024" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0025" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0026" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0027" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0028" x="50" y="2243" width="703" height="681"/>
+	<SubTexture name="yumi dance beat0029" x="50" y="2243" width="703" height="681"/>
+</TextureAtlas>
