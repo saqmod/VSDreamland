@@ -21,7 +21,7 @@ import Discord.DiscordClient;
 
 using StringTools;
 
-class MainMenuState extends MusicBeatState
+class PlayMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;
 
@@ -29,11 +29,10 @@ class MainMenuState extends MusicBeatState
 
 	var yumiOrbat:FlxSprite;
 
-	var optionShit:Array<String> = ['freeplay', 'options'];
+	var optionShit:Array<String> = ['story mode', 'freeplay', 'donate'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
-	var yumiDance:FlxSprite;
 	public static var firstStart:Bool = true;
 
 	public static var nightly:String = "";
@@ -91,21 +90,36 @@ class MainMenuState extends MusicBeatState
 			magenta.antialiasing = true;
 		add(magenta);
 
-		yumiDance = new FlxSprite(FlxG.width * 0.43, FlxG.height * 0.03);
-		yumiDance.frames = Paths.getSparrowAtlas('Yumi-Dance-Beat', 'dreamland');
-		yumiDance.animation.addByPrefix('dance', 'yumi dance beat', 24);
-		yumiDance.animation.play('dance', true);
-		if(FlxG.save.data.antialiasing)
-			yumiDance.antialiasing = true;
-		yumiDance.scrollFactor.set(0, 0.10);
-		add(yumiDance);
+		if(!FlxG.save.data.liteMenu) {
+		var logotype:FlxSprite = new FlxSprite(FlxG.width, 0);
+		logotype.frames = Paths.getSparrowAtlas('Vs_Dreamland_bumpin', 'dreamland');
+		logotype.animation.addByPrefix('bump', 'logo bumpin', 24);
+		logotype.animation.play('bump');
+		logotype.x -= logotype.frameHeight;
+		logotype.y -= 180;
+		logotype.scale.y = 0.3;
+		logotype.scale.x = 0.3;
+		logotype.scrollFactor.set();
+		if (FlxG.save.data.antialiasing)
+			logotype.antialiasing = true;
+		add(logotype);
 
+		var gf:FlxSprite = new FlxSprite(600, 100);
+		gf.frames = Paths.getSparrowAtlas('GF_CLOUD', 'dreamland');
+		gf.animation.addByPrefix('sleep', 'GF Dancing Beat', 24);
+		gf.animation.play('sleep');
+		gf.scale.y = 0.3;
+		gf.scale.x = 0.3;
+		gf.scrollFactor.set();
+		if (FlxG.save.data.antialiasing)
+			gf.antialiasing = true;
+		add(gf); }
 		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var tex = Paths.getSparrowAtlas('Main_MenuPOG', 'dreamland');
+		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
 
 		for (i in 0...optionShit.length)
 		{
@@ -176,7 +190,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				FlxG.switchState(new MainMenuState());
 			}
 
 			if (controls.ACCEPT)
@@ -244,7 +258,9 @@ class MainMenuState extends MusicBeatState
 				FlxG.switchState(new StoryMenuState());
 				trace("Story Menu Selected");
 			case 'freeplay':
-				FlxG.switchState(new PlayMenuState());
+				FlxG.switchState(new FreeplayState());
+
+				trace("Freeplay Menu Selected");
 			case 'donate':
 				FlxG.switchState(new CreditsState());
 			case 'options':

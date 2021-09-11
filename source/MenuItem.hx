@@ -16,7 +16,11 @@ class MenuItem extends FlxSpriteGroup
 	public function new(x:Float, y:Float, weekNum:Int = 0)
 	{
 		super(x, y);
-		week = new FlxSprite().loadGraphic(Paths.image('storymenu/week' + weekNum));
+		week = new FlxSprite();
+		week.frames = Paths.getSparrowAtlas('UIshit/dreamland-weeks', 'dreamland');
+		week.animation.addByPrefix('week0', 'week0 ', 24);
+		week.animation.addByPrefix('week1', 'week1 ', 24);
+		week.animation.play('week' + weekNum);
 		add(week);
 	}
 

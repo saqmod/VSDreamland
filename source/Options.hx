@@ -341,7 +341,7 @@ class Optimize extends Option
 
 	private override function updateDisplay():String
 	{
-		return 'Optimization' + (!FlxG.save.data.optimization ? "off" : "on");
+		return 'Optimization ' + (!FlxG.save.data.optimization ? "off" : "on");
 	}
 
 }
@@ -410,7 +410,7 @@ class Antialiasing extends Option
 
 	private override function updateDisplay():String
 	{
-		return 'Antialiasing ' + (!FlxG.save.data.antialiasing ? "off" : "on");
+		return 'Anti-aliasing ' + (!FlxG.save.data.antialiasing ? "off" : "on");
 	}
 }
 
@@ -472,7 +472,7 @@ class AccuracyOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return "-Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
+		return "Accuracy " + (!FlxG.save.data.accuracyDisplay ? "off" : "on");
 	}
 }
 
@@ -733,6 +733,26 @@ class ScrollSpeedOption extends Option
 	}
 }
 
+class MiddleScroll extends Option
+{
+	public function new(pablo:String)
+	{
+		super();
+		description = pablo;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Middle Scroll ' + (!FlxG.save.data.middlescroll ? 'off' : 'on');
+	}
+}
 
 class RainbowFPSOption extends Option
 {

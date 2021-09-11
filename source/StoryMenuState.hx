@@ -28,8 +28,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekData:Array<Dynamic> = [
 		['Tutorial'],
-		['Lucid Dreams', 'Newfound Angel'],
-		['Stress']
+		['Lucid Dreams', 'Newfound Angel']
 	];
 	var curDifficulty:Int = 1;
 
@@ -37,14 +36,12 @@ class StoryMenuState extends MusicBeatState
 
 	var weekCharacters:Array<Dynamic> = [
 		['', 'bf', 'gf'],
-		['dad', 'bf', 'gf'],
-		['', '', '']
+		['dad', 'bf', 'gf']
 	];
 
 	var weekNames:Array<String> = [
 		"Tutorial",
-		"Yumi",
-		'B A T'
+		"Dreamland"
 	];
 
 	var txtWeekTitle:FlxText;
@@ -94,7 +91,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
-		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
+		var ui_tex = Paths.getSparrowAtlas('UIshit/diffuculty-selection', 'dreamland');
 		yellowBG = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -126,7 +123,7 @@ class StoryMenuState extends MusicBeatState
 			{
 				var lock:FlxSprite = new FlxSprite(weekThing.width + 10 + weekThing.x);
 				lock.frames = ui_tex;
-				lock.animation.addByPrefix('lock', 'lock');
+				lock.animation.addByPrefix('lock', 'lock instance 1');
 				lock.animation.play('lock');
 				lock.ID = i;
 				lock.antialiasing = true;
@@ -147,16 +144,16 @@ class StoryMenuState extends MusicBeatState
 
 		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
 		leftArrow.frames = ui_tex;
-		leftArrow.animation.addByPrefix('idle', "arrow left");
-		leftArrow.animation.addByPrefix('press', "arrow push left");
+		leftArrow.animation.addByPrefix('idle', "arrow left instance 1");
+		leftArrow.animation.addByPrefix('press', "arrow push left instance 1");
 		leftArrow.animation.play('idle');
 		difficultySelectors.add(leftArrow);
 
 		sprDifficulty = new FlxSprite(leftArrow.x + 130, leftArrow.y);
 		sprDifficulty.frames = ui_tex;
-		sprDifficulty.animation.addByPrefix('easy', 'EASY');
-		sprDifficulty.animation.addByPrefix('normal', 'NORMAL');
-		sprDifficulty.animation.addByPrefix('hard', 'HARD');
+		sprDifficulty.animation.addByPrefix('easy', 'EASY instance 1');
+		sprDifficulty.animation.addByPrefix('normal', 'NORMAL instance 1');
+		sprDifficulty.animation.addByPrefix('hard', 'HARD instance 1');
 		sprDifficulty.animation.play('easy');
 		changeDifficulty();
 
@@ -164,8 +161,8 @@ class StoryMenuState extends MusicBeatState
 
 		rightArrow = new FlxSprite(sprDifficulty.x + sprDifficulty.width + 50, leftArrow.y);
 		rightArrow.frames = ui_tex;
-		rightArrow.animation.addByPrefix('idle', 'arrow right');
-		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
+		rightArrow.animation.addByPrefix('idle', 'arrow right instance 1');
+		rightArrow.animation.addByPrefix('press', "arrow push right instance 1", 24, false);
 		rightArrow.animation.play('idle');
 		difficultySelectors.add(rightArrow);
 
@@ -254,7 +251,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new PlayMenuState());
 		}
 
 		super.update(elapsed);

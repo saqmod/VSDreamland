@@ -90,7 +90,7 @@ class TitleState extends MusicBeatState
 		trace('NEWGROUNDS LOL');
 		#end
 
-		Save.bind('funkin', 'ninjamuffin99');
+		Save.bind('dreamland', 'aaronrocks40');
 		Save.saveInFile('dumb', 'test');
 
 		KadeEngineData.initSave();
@@ -359,12 +359,14 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>)
+	function createCoolText(textArray:Array<String>, ?yOffset:Float = 0)
 	{
 		for (i in 0...textArray.length)
 		{
 			var money:AlphabetDreamland = new AlphabetDreamland(0, 0, textArray[i], true, false);
 			money.screenCenter(X);
+			if (yOffset != 0)
+				money.y -= yOffset;
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
 			textGroup.add(money);
@@ -373,10 +375,12 @@ class TitleState extends MusicBeatState
 		}
 	}
 
-	function addMoreText(text:String)
+	function addMoreText(text:String, yOffset:Float = 0)
 	{
 		var coolText:AlphabetDreamland = new AlphabetDreamland(0, 0, text, true, false);
 		coolText.screenCenter(X);
+		if (yOffset != 0)
+			coolText.y -= yOffset;
 		coolText.y += (textGroup.length * 60) + 200;
 		credGroup.add(coolText);
 		textGroup.add(coolText);
@@ -403,15 +407,10 @@ class TitleState extends MusicBeatState
 
 		FlxG.log.add(curBeat);
 
-		FlxG.camera.zoom = flixel.math.FlxMath.lerp(1.05, FlxG.camera.zoom, 0.95);
-
 		switch (curBeat)
 		{
-			case 1:
-				createCoolText(['Dreamland Devs']);
-			// credTextShit.visible = true;
 			case 3:
-				addMoreText('present');
+				createCoolText(CoolUtil.coolTextFile(Paths.txt('authors')));
 				// manyIdiots.visible = true;
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
@@ -438,9 +437,10 @@ class TitleState extends MusicBeatState
 			case 9:
 				addMoreText('Newgrounds');
 			// credTextShit.visible = true;
+			case 10:
+				ngSpr.visible = true;
 			case 11:
 				addMoreText('is cool');
-				ngSpr.visible = true;
 			case 12:
 				ngSpr.visible = false;
 				deleteCoolText();
@@ -450,8 +450,8 @@ class TitleState extends MusicBeatState
 			// credTextShit.text += '\nlmao';
 			case 14:
 				deleteCoolText();
-				addMoreText('Friday');
-				addMoreText('Night');
+				addMoreText('Friday', 140);
+				addMoreText('Night', 80);
 				addMoreText('Funkin');
 			// credTextShit.text += '\nNight';
 			case 15:
@@ -477,9 +477,9 @@ class TitleState extends MusicBeatState
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
 				{
 					if(logoBl.angle == -4) 
-						FlxTween.angle(logoBl, logoBl.angle, 4, 4, {ease: FlxEase.quartInOut});
+						FlxTween.angle(logoBl, logoBl.angle, 4, 1, {ease: FlxEase.quartInOut});
 					if (logoBl.angle == 4) 
-						FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
+						FlxTween.angle(logoBl, logoBl.angle, -4, 1, {ease: FlxEase.quartInOut});
 				}, 0);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);

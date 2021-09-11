@@ -34,6 +34,9 @@ class DialogueBox extends FlxSpriteGroup
 	var yumi:FlxSprite;
 	var yumiHapp:FlxSprite;
 	var yumiSad:FlxSprite;
+	var yumiGrin:FlxSprite;
+	var yumiConf:FlxSprite;
+	var yumiUp:FlxSprite;
 
 	var curBubble:String;
 	var curAnim:String;
@@ -114,35 +117,59 @@ class DialogueBox extends FlxSpriteGroup
 		portraitRight.visible = false;
 
 		bf = new FlxSprite(0, 40);
-		bf.frames = Paths.getSparrowAtlas('bfPortrait', 'shared');
+		bf.loadGraphic(Paths.image('portraits/bfPortrait', 'dreamland'));
 		bf.updateHitbox();
 		bf.scrollFactor.set();
 		add(bf);
 		bf.visible = false;
 
 		yumi = new FlxSprite(-20, 40);
-		yumi.frames = Paths.getSparrowAtlas('yumi-pon', 'shared');
-		yumi.animation.addByPrefix('port', 'yumi-pon', 24, false);
+		yumi.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumi.animation.addByPrefix('port', 'yumi neutral', 24, false);
 		yumi.updateHitbox();
 		yumi.scrollFactor.set();
 		add(yumi);
 		yumi.visible = false;
 
 		yumiHapp = new FlxSprite(-20, 40);
-		yumiHapp.frames = Paths.getSparrowAtlas('yumi-pon-happy', 'shared');
-		yumiHapp.animation.addByPrefix('port', 'yumi-pon happy', 24, false);
+		yumiHapp.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumiHapp.animation.addByPrefix('port', 'yumi happy', 24, false);
 		yumiHapp.updateHitbox();
 		yumiHapp.scrollFactor.set();
 		add(yumiHapp);
 		yumiHapp.visible = false;
 
 		yumiSad = new FlxSprite(-20, 40);
-		yumiSad.frames = Paths.getSparrowAtlas('yumi-pon-worried', 'shared');
-		yumiSad.animation.addByPrefix('port', 'yumi-pon worried', 24, false);
+		yumiSad.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumiSad.animation.addByPrefix('port', 'yumi nervious', 24, false);
 		yumiSad.updateHitbox();
 		yumiSad.scrollFactor.set();
 		add(yumiSad);
 		yumiSad.visible = false;
+
+		yumiConf = new FlxSprite(-20, 40);
+		yumiConf.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumiConf.animation.addByPrefix('port', 'yumi confused', 24, false);
+		yumiConf.updateHitbox();
+		yumiConf.scrollFactor.set();
+		add(yumiConf);
+		yumiConf.visible = false;
+
+		yumiGrin = new FlxSprite(-20, 40);
+		yumiGrin.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumiGrin.animation.addByPrefix('port', 'yumi grin', 24, false);
+		yumiGrin.updateHitbox();
+		yumiGrin.scrollFactor.set();
+		add(yumiUp);
+		yumiGrin.visible = false;
+
+		yumiUp = new FlxSprite(-20, 40);
+		yumiUp.frames = Paths.getSparrowAtlas('portraits/yumi', 'dreamland');
+		yumiUp.animation.addByPrefix('port', 'yumi upset', 24, false);
+		yumiUp.updateHitbox();
+		yumiUp.scrollFactor.set();
+		add(yumiUp);
+		yumiUp.visible = false;
 		
 		box.animation.play('normalOpen');
 		box.updateHitbox();
@@ -297,21 +324,62 @@ class DialogueBox extends FlxSpriteGroup
 			case 'yumi':
 				bf.visible = false;
 				switch(curAnim){
+					case 'normal':
+						yumiHapp.visible = false;
+						yumi.visible = true;
+						yumiConf.visible = false;
+						yumiGrin.visible = false;
+						yumiSad.visible = false;
+						yumiUp.visible = false;
+						yumiHapp.animation.play('port');
+					case 'sad':
+						yumiHapp.visible = false;
+						yumi.visible = false;
+						yumiConf.visible = false;
+						yumiGrin.visible = false;
+						yumiSad.visible = true;
+						yumiUp.visible = false;
+						yumiHapp.animation.play('port');						
 					case 'happy':
 						yumiHapp.visible = true;
 						yumi.visible = false;
+						yumiConf.visible = false;
+						yumiGrin.visible = false;
 						yumiSad.visible = false;
+						yumiUp.visible = false;
 						yumiHapp.animation.play('port');	
 					case 'worried':
 						yumiSad.visible = true;
 						yumi.visible = false;
+						yumiConf.visible = false;
+						yumiGrin.visible = false;
+						yumiUp.visible = false;
 						yumiHapp.visible = false;
 						yumiSad.animation.play('port');
-					case 'normal':
-						yumi.visible = true;
+					case 'confused':
+						yumi.visible = false;
 						yumiHapp.visible = false;
+						yumiConf.visible = true;
+						yumiGrin.visible = false;
+						yumiUp.visible = false;
 						yumiSad.visible = false;
 						yumi.animation.play('port');
+					case 'grin':
+						yumi.visible = false;
+						yumiHapp.visible = false;
+						yumiConf.visible = false;
+						yumiGrin.visible = true;
+						yumiSad.visible = false;
+						yumiUp.visible = false;
+						yumi.animation.play('port');
+					case 'upset':
+						yumiHapp.visible = false;
+						yumi.visible = false;
+						yumiConf.visible = false;
+						yumiGrin.visible = false;
+						yumiSad.visible = false;
+						yumiUp.visible = true;
+						yumiHapp.animation.play('port');	
 				}
 		}
 	}
@@ -321,6 +389,6 @@ class DialogueBox extends FlxSpriteGroup
 		var splitName:Array<String> = dialogueList[0].split(":");
 		curCharacter = splitName[1];
 		curAnim = splitName[2];
-		dialogueList[0] = dialogueList[0].substr(splitName[2].length + 2).trim();
+		dialogueList[0] = dialogueList[0].substr(splitName[1].length + 2).trim();
 	}
 }

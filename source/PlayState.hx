@@ -3,6 +3,8 @@ package;
 // sleep :)
 import Sys.sleep;
 
+import SaveData.Save;
+
 import flixel.input.keyboard.FlxKey;
 import haxe.Exception;
 import openfl.geom.Matrix;
@@ -110,6 +112,7 @@ class PlayState extends MusicBeatState
 	private var vocals:FlxSound;
 
 	public static var dad:Character;
+	private var dad2:Character;
 	public static var gf:Character;
 	public static var boyfriend:Boyfriend;
 
@@ -541,6 +544,85 @@ class PlayState extends MusicBeatState
 							}
 						}
 				}
+
+				case 'park':
+				{
+					curStage = 'park';
+					defaultCamZoom = 0.9;
+
+					var bg:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/park/DarkerNightly','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						bg.antialiasing = true;
+					bg.scrollFactor.set(0.5, 0.5);
+					bg.active = false;
+					bg.setGraphicSize(Std.int(bg.width * 0.8));
+					bg.updateHitbox();
+					add(bg);	
+					
+					var trees:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/park/DTreeFloorIsU','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						trees.antialiasing = true;
+					trees.scrollFactor.set(0.9, 0.9);
+					trees.active = false;
+					trees.setGraphicSize(Std.int(trees.width * 0.8));
+					trees.updateHitbox();
+					add(trees);
+				}
+				case 'grass':
+				{
+					curStage = 'grass';
+					defaultCamZoom = 0.9;
+
+					var bg:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/grass/theHorizon','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.active = false;
+					bg.setGraphicSize(Std.int(bg.width * 0.8));
+					bg.updateHitbox();
+					add(bg);	
+
+					var island:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/grass/island','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						island.antialiasing = true;
+					island.scrollFactor.set(0.5, 0.5);
+					island.active = false;
+					island.setGraphicSize(Std.int(island.width * 0.8));
+					island.updateHitbox();
+					add(island);	
+					
+					var grass:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/grass/grassland','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						grass.antialiasing = true;
+					grass.scrollFactor.set(0.9, 0.9);
+					grass.active = false;
+					grass.setGraphicSize(Std.int(grass.width * 0.8));
+					grass.updateHitbox();
+					add(grass);					
+				}
+				case 'disorianted':
+				{
+					var bg:FlxSprite = new FlxSprite(-300, -100);
+					bg.frames = Paths.getSparrowAtlas('bg/disorianted/disillusionment','dreamland');
+					if (FlxG.save.data.antialiasing)
+						bg.antialiasing = true;
+					bg.scrollFactor.set(0.9, 0.9);
+					bg.animation.addByPrefix('bg', 'bg', 24);
+					bg.animation.play('bg');
+					bg.active = false;
+					bg.setGraphicSize(Std.int(bg.width * 2));
+					bg.updateHitbox();
+					add(bg);	
+
+					var island:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/disorianted/Venture','dreamland'));
+					if (FlxG.save.data.antialiasing)
+						island.antialiasing = true;
+					island.scrollFactor.set(0.5, 0.5);
+					island.active = false;
+					island.setGraphicSize(Std.int(island.width * 3.8));
+					island.updateHitbox();
+					add(island);	
+				}
 				case 'mallEvil':
 				{
 						curStage = 'mallEvil';
@@ -750,6 +832,11 @@ class PlayState extends MusicBeatState
 
 		dad = new Character(100, 100, SONG.player2);
 
+		if (SONG.song.toLowerCase() == 'stress')
+		{
+			dad2 = new Character(280, 100, "yumi");
+		}
+
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
 
 		switch (SONG.player2)
@@ -776,6 +863,10 @@ class PlayState extends MusicBeatState
 				dad.y += 300;
 			case 'parents-christmas':
 				dad.x -= 500;
+			case 'bat':
+				dad.x -= 50;
+				dad.y -= 50;
+				camPos.set(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y -= 50);
 			case 'senpai':
 				dad.x += 150;
 				dad.y += 360;
@@ -790,7 +881,11 @@ class PlayState extends MusicBeatState
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 		}
 
-
+		switch (SONG.player1)
+		{
+			case 'bat':
+				boyfriend.y -= 170;
+		}
 		
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
 
@@ -816,6 +911,13 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
+			case 'grass':
+				boyfriend.x += 125;
+				gf.x += 125;
+				dad.x += 25;
+				boyfriend.y += 50;
+				gf.y += 50;
+				dad.y += 50;
 			case 'schoolEvil':
 				if(FlxG.save.data.distractions){
 				// trailArea.scrollFactor.set();
@@ -834,6 +936,7 @@ class PlayState extends MusicBeatState
 		}
 		if(!FlxG.save.data.optimization)
 		{
+			if (SONG.song.toLowerCase() == 'stress') add(dad2);
 			add(gf);
 
 			// Shitty layering but whatev it works LOL
@@ -1195,6 +1298,7 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
+			if (SONG.song.toLowerCase() == 'stress') dad2.dance();
 			dad.dance();
 			gf.dance();
 			boyfriend.playAnim('idle');
@@ -1313,6 +1417,8 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		}
+
+		Save.saveInFile('last-played', SONG.song.toUpperCase());
 
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
@@ -1439,10 +1545,6 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-
-				if (!gottaHitNote && FlxG.save.data.optimization)
-					continue;
-
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 
@@ -1500,11 +1602,11 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
 
+			if (FlxG.save.data.middlescroll && player == 0)
+				babyArrow.visible = false;
+
 			//defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
-
-			if (FlxG.save.data.optimization && player == 0)
-				continue;
 		
 			if (FlxG.save.data.pixelNotes)
 			{
@@ -1631,6 +1733,9 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
+			if (FlxG.save.data.middlescroll)
+				babyArrow.x -= 275;
+
 			if (!isStoryMode)
 			{
 				babyArrow.y -= 10;
@@ -1654,10 +1759,6 @@ class PlayState extends MusicBeatState
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
 
-			if (FlxG.save.data.optimization){
-				babyArrow.x -= 275;
-			}
-			
 			cpuStrums.forEach(function(spr:FlxSprite)
 			{					
 				spr.centerOffsets(); //CPU arrows start out slightly off-center
@@ -1755,7 +1856,10 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
-		if(FlxG.keys.justPressed.SPACE)
+		if (combo > totalCombo)
+			totalCombo = combo;
+
+		if(FlxG.keys.pressed.SPACE)
 			boyfriend.animation.play('dodge');
 
 		if (FlxG.save.data.optimization)
@@ -1892,7 +1996,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		scoreTxt.text = Ratings.CalculateRanking(songScore,songScoreDef,nps,maxNPS,accuracy);
-		infoTxt.text = ("Total combo:" + totalCombo + "\nCombo:" + combo + (!FlxG.save.data.botplay ? "\nSicks: " + sicks + "\nGoods: " + goods + "\nOks: " + oks + "\nUhhs: " + uhhs : "")); 
+		infoTxt.text = ("Highest combo:" + totalCombo + "\nSicks: " + sicks + "\nGoods: " + goods + "\nBads: " + oks + "\nShits: " + uhhs); 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -1948,7 +2052,8 @@ class PlayState extends MusicBeatState
 			}
 			else if (healthBar.percent > 80){
 				iconP2.animation.curAnim.curFrame = 1;
-				iconP1.animation.curAnim.curFrame = 2;
+				if (boyfriend.curCharacter.startsWith('bf'))
+					iconP1.animation.curAnim.curFrame = 2;
 			}
 			else{
 				iconP2.animation.curAnim.curFrame = 0;
@@ -2402,12 +2507,16 @@ class PlayState extends MusicBeatState
 						{
 							case 2:
 								dad.playAnim('singUP' + altAnim, true);
+								if (SONG.song.toLowerCase() == 'stress') dad2.playAnim('singUP' + altAnim, true);
 							case 3:
 								dad.playAnim('singRIGHT' + altAnim, true);
+								if (SONG.song.toLowerCase() == 'stress') dad2.playAnim('singRIGHT' + altAnim, true);
 							case 1:
 								dad.playAnim('singDOWN' + altAnim, true);
+								if (SONG.song.toLowerCase() == 'stress') dad2.playAnim('singDOWN' + altAnim, true);
 							case 0:
 								dad.playAnim('singLEFT' + altAnim, true);
+								if (SONG.song.toLowerCase() == 'stress') dad2.playAnim('singLEFT' + altAnim, true);
 						}
 						
 						if (FlxG.save.data.cpuStrums)
@@ -2440,6 +2549,7 @@ class PlayState extends MusicBeatState
 						#end
 
 						dad.holdTimer = 0;
+						if (SONG.song.toLowerCase() == 'stress') dad2.holdTimer = 0;
 	
 						if (SONG.needsVoices)
 							vocals.volume = 1;
@@ -2710,8 +2820,6 @@ class PlayState extends MusicBeatState
 					score = 200;
 					ss = false;
 					goods++;
-					if (health < 2)
-						health += 0.04;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 0.75;
 				case 'sick':
@@ -2719,8 +2827,6 @@ class PlayState extends MusicBeatState
 						daRating = 'dots';
 					else
 						daRating = 'sick';
-					if (health < 2)
-						health += 0.1;
 					if (FlxG.save.data.accuracyMod == 0)
 						totalNotesHit += 1;
 					sicks++;
@@ -3373,6 +3479,9 @@ class PlayState extends MusicBeatState
 
 				note.rating = Ratings.CalculateRating(noteDiff);
 
+				if (health < 2)
+					health += 0.1;
+
 				// add newest note to front of notesHitArray
 				// the oldest notes are at the end and are removed first
 				if (!note.isSustainNote)
@@ -3390,7 +3499,6 @@ class PlayState extends MusicBeatState
 					{
 						popUpScore(note);
 						combo += 1;
-						totalCombo++;
 					}
 					else
 						totalNotesHit += 1;
@@ -3615,6 +3723,8 @@ class PlayState extends MusicBeatState
 			// Dad doesnt interupt his own notes
 			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection && dad.curCharacter != 'gf')
 				dad.dance();
+			if (SONG.song.toLowerCase() == 'stress')
+				dad2.dance();
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);

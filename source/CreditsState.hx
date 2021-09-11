@@ -120,12 +120,12 @@ class CreditsState extends MusicBeatState
 		if (controls.ACCEPT)
 		{
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new PlayMenuState());
 		}
 		if (controls.BACK)
 		{
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new PlayMenuState());
 		}
 		var danced:Bool = false;
 		if (!danced)
@@ -135,7 +135,7 @@ class CreditsState extends MusicBeatState
 			daChar.dance();
 			danced = false;
 		if(leftState)
-			daChar.playAnim('singLEFT');
+			daChar.playAnim('singRIGHT');
 
 		super.update(elapsed);
 	}
