@@ -30,6 +30,8 @@ class Alphabet extends FlxSpriteGroup
 
 	public var widthOfWords:Float = FlxG.width;
 
+	public var forceX:Float = Math.NEGATIVE_INFINITY;
+	public var xAdd:Float = 0;
 	var yMulti:Float = 1;
 
 	// custom shit
@@ -51,6 +53,8 @@ class Alphabet extends FlxSpriteGroup
 		_finalText = text;
 		this.text = text;
 		isBold = bold;
+
+		forceX = Math.NEGATIVE_INFINITY;
 
 		if (text != "")
 		{
@@ -233,6 +237,13 @@ class Alphabet extends FlxSpriteGroup
 
 			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.30);
 			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.30);
+
+			var lerpVal:Float = CoolUtil.boundTo(elapsed * 9.6, 0, 1);
+			if(forceX != Math.NEGATIVE_INFINITY) {
+				x = forceX;
+			} else {
+				x = FlxMath.lerp(x, (targetY * 20) + 90 + xAdd, lerpVal);
+			}
 		}
 
 		super.update(elapsed);

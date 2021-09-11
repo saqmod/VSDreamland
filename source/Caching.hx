@@ -51,7 +51,7 @@ class Caching extends MusicBeatState
 	override function create()
 	{
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('dreamland', 'aaronrocks40');
 
 		PlayerSettings.init();
 
@@ -68,7 +68,7 @@ class Caching extends MusicBeatState
 		text.alignment = FlxTextAlign.CENTER;
 		text.alpha = 0;
 
-		versionShit = new FlxText(5, FlxG.height - 29, 0, 'v' + MainMenuState.gameVer, 12);
+		versionShit = new FlxText(5, FlxG.height - 29, 0, 'v' + MainMenuState.dreamlandVersion, 12);
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionShit.scrollFactor.set();
 

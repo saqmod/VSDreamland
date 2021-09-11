@@ -13,6 +13,7 @@ import openfl.utils.AssetType;
 import lime.graphics.Image;
 import flixel.graphics.FlxGraphic;
 import openfl.utils.AssetManifest;
+import Achievements;
 import openfl.utils.AssetLibrary;
 import flixel.system.FlxAssets;
 
@@ -936,13 +937,13 @@ class PlayState extends MusicBeatState
 		}
 		if(!FlxG.save.data.optimization)
 		{
-			if (SONG.song.toLowerCase() == 'stress') add(dad2);
 			add(gf);
 
 			// Shitty layering but whatev it works LOL
 			if (curStage == 'limo')
 				add(limo);
 
+			if (SONG.song.toLowerCase() == 'stress') add(dad2);
 			add(dad);
 			add(boyfriend);
 		}
@@ -1043,7 +1044,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		// Add Dreamland watermark
-		dreamlandWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - Dreamland " + MainMenuState.modVer : ""), 16);
+		dreamlandWatermark = new FlxText(4,healthBarBG.y + 50,0,SONG.song + " " + (storyDifficulty == 2 ? "Hard" : storyDifficulty == 1 ? "Normal" : "Easy") + (Main.watermarks ? " - Dreamland " + MainMenuState.dreamlandVersion : ""), 16);
 		dreamlandWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		dreamlandWatermark.scrollFactor.set();
 		// add(dreamlandWatermark); -- fuck the watermark
@@ -2536,6 +2537,9 @@ class PlayState extends MusicBeatState
 								else
 									spr.centerOffsets();
 							});
+
+							if(FlxG.save.data.noteSplashes && !FlxG.save.data.optimization && !FlxG.save.data.middlescroll)
+								makeSplash(daNote);
 						}
 
 						if (healthBar.percent >= 10 && dad.curCharacter.startsWith('bat'))
@@ -2662,11 +2666,36 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
+		var achievementID:Int = 0;
 		if (SONG.validScore)
 		{
 			#if !switch
 			Highscore.saveScore(SONG.song, Math.round(songScore), storyDifficulty);
 			#end
+
+			if (SONG.song.toLowerCase() == 'newfound angel' && misses == 0 && storyDifficulty == 2)
+			{
+				if (!Achievements.achievementsUnlocked[achievementID][2])
+					Achievements.achievementsUnlocked[achievementID][2] = true;
+			}
+
+			if (SONG.song.toLowerCase() == 'stress' && misses == 0 && storyDifficulty == 2)
+			{
+				if (!Achievements.achievementsUnlocked[achievementID][3])
+					Achievements.achievementsUnlocked[achievementID][3] = true;
+			}
+
+			if (SONG.song.toLowerCase() == 'newfound angel' && misses == 0 && storyDifficulty == 2 && oks == 0 && uhhs == 0 && goods == 0) 
+			{
+				if (!Achievements.achievementsUnlocked[achievementID][4])
+					Achievements.achievementsUnlocked[achievementID][4] = true;
+			}
+		
+			if (SONG.song.toLowerCase() == 'stress' && misses == 0 && storyDifficulty == 2 && oks == 0 && uhhs == 0 && goods == 0)
+			{
+				if (!Achievements.achievementsUnlocked[achievementID][5])
+					Achievements.achievementsUnlocked[achievementID][5] = true;
+			}
 		}
 
 		if (offsetTesting)
@@ -2960,81 +2989,7 @@ class PlayState extends MusicBeatState
 	
 			currentTimingShown.cameras = [camHUD];
 			comboSpr.cameras = [camHUD];
-			rating.cameras = [camHUD];
-
-			var sploosh:FlxSprite = new FlxSprite(daNote.x, playerStrums.members[daNote.noteData].y);
-			if (FlxG.save.data.noteSplashes)
-			{
-				if (!curStage.startsWith('school'))
-				{
-					var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('UIshit/noteSplashes', 'dreamland');
-					sploosh.frames = tex;
-					sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
-					sploosh.animation.addByPrefix('splash 0 1', 'note impact 1  blue', 24, false);
-					sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
-					sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
-					sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
-					sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
-					sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
-					sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
-					if (daRating == 'sick' || daRating == 'dots')
-					{
-						add(sploosh);
-						sploosh.cameras = [camHUD];
-						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-						sploosh.alpha = 0.6;
-						sploosh.offset.x += 90;
-						sploosh.offset.y += 80;
-						sploosh.animation.finishCallback = function(name) sploosh.kill();
-					}
-					else if (FlxG.save.data.botplay && daRating == 'nice' || FlxG.save.data.botplay && daRating == 'dots')
-					{
-						add(sploosh);
-						sploosh.cameras = [camHUD];
-						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-						sploosh.alpha = 0.6;
-						sploosh.offset.x += 90;
-						sploosh.offset.y += 80;
-						sploosh.animation.finishCallback = function(name) sploosh.kill();
-					}
-				}
-				else
-				{
-					sploosh.loadGraphic(Paths.image('weeb/pixelUI/noteSplashes-pixels', 'week6'), true, 50, 50);
-					sploosh.animation.add('splash 0 0', [0, 1, 2, 3], 24, false);
-					sploosh.animation.add('splash 1 0', [4, 5, 6, 7], 24, false);
-					sploosh.animation.add('splash 0 1', [8, 9, 10, 11], 24, false);
-					sploosh.animation.add('splash 1 1', [12, 13, 14, 15], 24, false);
-					sploosh.animation.add('splash 0 2', [16, 17, 18, 19], 24, false);
-					sploosh.animation.add('splash 1 2', [20, 21, 22, 23], 24, false);
-					sploosh.animation.add('splash 0 3', [24, 25, 26, 27], 24, false);
-					sploosh.animation.add('splash 1 3', [28, 29, 30, 31], 24, false);
-					if (daRating == 'sick')
-					{
-						sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
-						sploosh.updateHitbox();
-						add(sploosh);
-						sploosh.cameras = [camHUD];
-						sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-						sploosh.alpha = 0.6;
-						sploosh.offset.x += 90;
-						sploosh.offset.y += 80;
-						sploosh.animation.finishCallback = function(name) sploosh.kill();
-					}
-					else if (FlxG.save.data.botplay && daRating == 'good')
-						{
-							sploosh.setGraphicSize(Std.int(sploosh.width * daPixelZoom));
-							sploosh.updateHitbox();
-							add(sploosh);
-							sploosh.cameras = [camHUD];
-							sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
-							sploosh.alpha = 0.6;
-							sploosh.offset.x += 90;
-							sploosh.offset.y += 80;
-							sploosh.animation.finishCallback = function(name) sploosh.kill();				
-						}
-				}
-		 	} // ahdddhdddhdjdhdjdddpssdufidsufpodiufoidsufpisdufiuodi i steal code from fnf mic'd upp (no fuck down) 
+			rating.cameras = [camHUD]; 
 
 			var seperatedScore:Array<Int> = [];
 	
@@ -3123,6 +3078,30 @@ class PlayState extends MusicBeatState
 			curSection += 1;
 			}
 		}
+
+	function makeSplash(daNote:Note)
+	{
+		var sploosh:FlxSprite = new FlxSprite(daNote.x, playerStrums.members[daNote.noteData].y);
+		var tex:flixel.graphics.frames.FlxAtlasFrames = Paths.getSparrowAtlas('UIshit/noteSplashes', 'dreamland');
+		sploosh.frames = tex;
+		sploosh.animation.addByPrefix('splash 0 0', 'note impact 1 purple', 24, false);
+		sploosh.animation.addByPrefix('splash 0 1', 'note impact 1  blue', 24, false);
+		sploosh.animation.addByPrefix('splash 0 2', 'note impact 1 green', 24, false);
+		sploosh.animation.addByPrefix('splash 0 3', 'note impact 1 red', 24, false);
+		sploosh.animation.addByPrefix('splash 1 0', 'note impact 2 purple', 24, false);
+		sploosh.animation.addByPrefix('splash 1 1', 'note impact 2 blue', 24, false);
+		sploosh.animation.addByPrefix('splash 1 2', 'note impact 2 green', 24, false);
+		sploosh.animation.addByPrefix('splash 1 3', 'note impact 2 red', 24, false);
+
+		// and main part
+		add(sploosh);
+		sploosh.cameras = [camHUD];
+		sploosh.animation.play('splash ' + FlxG.random.int(0, 1) + " " + daNote.noteData);
+		sploosh.alpha = 0.6;
+		sploosh.offset.x += 90;
+		sploosh.offset.y += 80;
+		sploosh.animation.finishCallback = function(name) remove(sploosh);
+	}
 
 	public function NearlyEquals(value1:Float, value2:Float, unimportantDifference:Float = 10):Bool
 		{
@@ -3478,6 +3457,9 @@ class PlayState extends MusicBeatState
 				var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition);
 
 				note.rating = Ratings.CalculateRating(noteDiff);
+
+				if(note.rating == 'sick' && FlxG.save.data.noteSplashes && !FlxG.save.data.optimization)
+					makeSplash(note);
 
 				if (health < 2)
 					health += 0.1;

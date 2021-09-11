@@ -141,6 +141,24 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+			case 'gedon':
+				tex = Paths.getSparrowAtlas('characters/Gedon');
+				frames = tex;
+				animation.addByPrefix('idle', 'Idle', 24);
+				animation.addByPrefix('singUP', 'Up', 24);
+				animation.addByPrefix('singRIGHT', 'Right', 24);
+				animation.addByPrefix('singDOWN', 'Down', 24);
+				animation.addByPrefix('singLEFT', 'Left', 24);
+
+				loadOffsetFile('gedon', 'preload');
+
+				/*addOffset('idle');
+				addOffset("singUP", -6, 50);
+				addOffset("singRIGHT", 0, 27);
+				addOffset("singLEFT", -10, 10);
+				addOffset("singDOWN", 0, -30);*/
+
+				playAnim('idle');
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('characters/spooky_kids_assets');
 				frames = tex;
@@ -223,11 +241,30 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'yumi left PON', 24, false);
 				animation.addByPrefix('singRIGHT', 'yumi right PON', 24, false);
 
-				addOffset('idle', 14, -200);
+				loadOffsetFile('yumi');
+				/*addOffset('idle', 14, -200);
 				addOffset("singUP", 15, -189);
 				addOffset("singRIGHT", 12, -203);
 				addOffset("singLEFT", 14, -199);
-				addOffset("singDOWN", 12, -208);
+				addOffset("singDOWN", 12, -208);*/
+
+				playAnim('idle');
+				trace('cute girl is selected');
+			case 'yumi-dark':
+				tex = Paths.getSparrowAtlas('characters/YumiNight_Assets', 'dreamland');
+				frames = tex;
+				animation.addByPrefix('idle', 'yumi idle PON', 24, false);
+				animation.addByPrefix('singUP', 'yumi up PON', 24, false);
+				animation.addByPrefix('singDOWN', 'yumi down PON', 24, false);
+				animation.addByPrefix('singLEFT', 'yumi left PON', 24, false);
+				animation.addByPrefix('singRIGHT', 'yumi right PON', 24, false);
+
+				loadOffsetFile('yumi');
+				/*addOffset('idle', 14, -200);
+				addOffset("singUP", 15, -189);
+				addOffset("singRIGHT", 12, -203);
+				addOffset("singLEFT", 14, -199);
+				addOffset("singDOWN", 12, -208);*/
 
 				playAnim('idle');
 				trace('cute girl is selected');
@@ -240,11 +277,13 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'bat goes left', 24, false);
 				animation.addByPrefix('singRIGHT', 'bat goes right', 24, false);
 
-				addOffset('idle', 0, 65);
+				loadOffsetFile('bat');
+
+				/*addOffset('idle', 0, 65);
 				addOffset("singUP", 0, 74);
 				addOffset("singRIGHT", -15, 65);
 				addOffset("singLEFT", 5, 67);
-				addOffset("singDOWN", 0, 65);
+				addOffset("singDOWN", 0, 65);*/
 
 				playAnim('idle');
 				trace('this is not cute');
@@ -317,13 +356,54 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
-				animation.addByPrefix('dodge', 'boyfriend dodge', 24, false);
+				animation.addByPrefix('dodge', 'boyfriend dodge', 24, true);
 
 				animation.addByPrefix('firstDeath', "BF dies", 24, false);
 				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
 				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
+
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				addOffset("hey", 7, 4);
+				addOffset("dodge", -5);
+				addOffset('firstDeath', 37, 11);
+				addOffset('deathLoop', 37, 5);
+				addOffset('deathConfirm', 37, 69);
+				addOffset('scared', -4);
+
+				playAnim('idle');
+
+				flipX = true;
+
+			case 'bf-dark':
+				var tex = Paths.getSparrowAtlas('characters/BoyFriendNight_Assets', 'dreamland');
+				frames = tex;
+				animation.addByPrefix('idle', 'BF idle dance instance 1', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP instance 1', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT instance 1', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT instance 1', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN instance 1', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS instance 1', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS insatnce 1', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS instance 1', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS insatnce 1', 24, false);
+				animation.addByPrefix('hey', 'BF HEY!! insatnce 1', 24, false);
+				animation.addByPrefix('dodge', 'boyfriend dodge instance 1', 24, true);
+
+				animation.addByPrefix('firstDeath', "BF dies instance 1", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead Loop instance 1", 24, true);
+				animation.addByPrefix('deathConfirm', "BF Dead confirm instance 1", 24, false);
+
+				animation.addByPrefix('scared', 'BF idle shaking instance 1', 24);
 
 				addOffset('idle', -5);
 				addOffset("singUP", -29, 27);
@@ -567,9 +647,20 @@ class Character extends FlxSprite
 		}
 	}
 
+	public function loadOffsetFile(character:String, library:String = 'dreamland')
+	{
+		var offset:Array<String> = CoolUtil.coolTextFile(Paths.script('offsets/' + character + "Offsets", library));
+
+		for (i in 0...offset.length)
+		{
+			var data:Array<String> = offset[i].split(' ');
+			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+		}
+	}
+
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if (!isPlayer)
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{

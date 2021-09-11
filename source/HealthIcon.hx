@@ -19,9 +19,9 @@ class HealthIcon extends FlxSprite
 			default:			
 				loadGraphic(Paths.image('iconGrid'), true, 150, 150);
 				animation.add('bf', [0, 1, 21], 0, false, isPlayer);
-				animation.add('bf-car', [0, 1], 0, false, isPlayer);
-				animation.add('bf-holding-gf', [0, 1], 0, false, isPlayer);
-				animation.add('bf-christmas', [0, 1], 0, false, isPlayer);
+				animation.add('bf-car', [0, 1, 21], 0, false, isPlayer);
+				animation.add('bf-dark', [0, 1, 21], 0, false, isPlayer);
+				animation.add('bf-christmas', [0, 1, 21], 0, false, isPlayer);
 				animation.add('bf-pixel', [21, 21, 21], 0, false, isPlayer);
 				animation.add('spooky', [2, 3], 0, false, isPlayer);
 				animation.add('pico', [4, 5], 0, false, isPlayer);
@@ -43,9 +43,13 @@ class HealthIcon extends FlxSprite
 			case 'yumi' | 'yumi-worried' | 'bat' | 'bat-evil':
 				loadGraphic(Paths.image('dreamlandIcons', 'dreamland'), true, 150, 150);
 				animation.add('yumi', [0, 2, 1], 0, false, isPlayer);
+				animation.add('yumi-dark', [0, 2, 1], 0, false, isPlayer);
 				animation.add('bat', [3, 4], 0, false, isPlayer);
 				animation.add('bat-evil', [5, 6], 0, false, isPlayer);
 				animation.add('yumi-worried', [7, 8], 0, false, isPlayer);
+			case 'gedon':
+				loadGraphic(Paths.image('gedonIcon', 'preload'), true, 150, 150);
+				animation.add('gedon', [0], 0, false, isPlayer);
 		}
 		animation.play(char);
 

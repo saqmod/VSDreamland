@@ -469,6 +469,7 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
+			remove(gedonLogo);
 
 			FlxTween.tween(logoBl,{y: 0}, 1.4, {ease: FlxEase.expoInOut});
 

@@ -37,6 +37,13 @@ class CoolUtil
 			return daList;
 		}
 
+	public static function dumbTextFile(path:String):String
+	{
+		var daList:String = Assets.getText(path);
+
+		return daList;
+	}
+
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
 		var dumbArray:Array<Int> = [];
@@ -45,5 +52,20 @@ class CoolUtil
 			dumbArray.push(i);
 		}
 		return dumbArray;
+	}
+
+	public static function browserLoad(site:String) {
+		#if linux
+		Sys.command('/usr/bin/xdg-open', [site, "&"]);
+		#else
+		flixel.FlxG.openURL(site);
+		#end
+	}
+
+	public static function boundTo(value:Float, min:Float, max:Float):Float {
+		var newValue:Float = value;
+		if(newValue < min) newValue = min;
+		else if(newValue > max) newValue = max;
+		return newValue;
 	}
 }

@@ -290,6 +290,7 @@ class MenuOption extends Option
 		FlxG.save.data.liteMenu = !FlxG.save.data.liteMenu;
 		
 		display = updateDisplay();
+		flixel.FlxG.resetState();
 		return true;
 	}
 

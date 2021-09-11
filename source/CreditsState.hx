@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.system.FlxSound;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 
@@ -37,7 +38,7 @@ class CreditsState extends MusicBeatState
 		super.create();
 
 		FlxG.sound.music.stop();
-		FlxG.sound.playMusic(Paths.music('breakfast'));
+		FlxG.sound.playMusic(Paths.music('breakfast', 'preload'));
 
 		leftState = false;
 
@@ -120,12 +121,12 @@ class CreditsState extends MusicBeatState
 		if (controls.ACCEPT)
 		{
 			leftState = true;
-			FlxG.switchState(new PlayMenuState());
+			FlxG.switchState(new MainMenuState());
 		}
 		if (controls.BACK)
 		{
 			leftState = true;
-			FlxG.switchState(new PlayMenuState());
+			FlxG.switchState(new MainMenuState());
 		}
 		var danced:Bool = false;
 		if (!danced)
