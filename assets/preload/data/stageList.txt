@@ -8,4 +8,4 @@ school
 schoolEvil
 grass
 park
-disorianted
+disorientated
