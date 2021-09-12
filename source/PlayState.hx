@@ -76,6 +76,8 @@ class PlayState extends MusicBeatState
 
 	public static var blubolls:Int = 0;
 
+	var venture:FlxSprite;
+
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -572,7 +574,7 @@ class PlayState extends MusicBeatState
 				case 'grass':
 				{
 					curStage = 'grass';
-					defaultCamZoom = 0.9;
+					defaultCamZoom = 0.89;
 
 					var bg:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/grass/theHorizon','dreamland'));
 					if (FlxG.save.data.antialiasing)
@@ -601,28 +603,32 @@ class PlayState extends MusicBeatState
 					grass.updateHitbox();
 					add(grass);					
 				}
-				case 'disorianted':
+				case 'disorientated':
 				{
+					curStage = 'disorientated';
+					defaultCamZoom = 0.66;
+
 					var bg:FlxSprite = new FlxSprite(-300, -100);
-					bg.frames = Paths.getSparrowAtlas('bg/disorianted/disillusionment','dreamland');
+					bg.frames = Paths.getSparrowAtlas('bg/disorientated/disillusionment','dreamland');
 					if (FlxG.save.data.antialiasing)
 						bg.antialiasing = true;
-					bg.scrollFactor.set(0.9, 0.9);
+					bg.scrollFactor.set(0.5, 0.5);
 					bg.animation.addByPrefix('bg', 'bg', 24);
 					bg.animation.play('bg');
-					bg.active = false;
+					bg.screenCenter();
 					bg.setGraphicSize(Std.int(bg.width * 2));
 					bg.updateHitbox();
 					add(bg);	
 
-					var island:FlxSprite = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/disorianted/Venture','dreamland'));
+					venture = new FlxSprite(-300, -100).loadGraphic(Paths.image('bg/disorientated/Venture','dreamland'));
 					if (FlxG.save.data.antialiasing)
-						island.antialiasing = true;
-					island.scrollFactor.set(0.5, 0.5);
-					island.active = false;
-					island.setGraphicSize(Std.int(island.width * 3.8));
-					island.updateHitbox();
-					add(island);	
+						venture.antialiasing = true;
+					venture.scrollFactor.set(0.9, 0.9);
+					venture.active = false;
+					venture.setGraphicSize(Std.int(venture.width * 1.8));
+					venture.screenCenter();
+					venture.updateHitbox();
+					// add(venture); - no	
 				}
 				case 'mallEvil':
 				{
@@ -934,10 +940,18 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
+			case 'disorientated':
+				gf.x += 455;
+				gf.y -= 96;
+				boyfriend.x += 1075;
+				boyfriend.y -= 65;
 		}
 		if(!FlxG.save.data.optimization)
 		{
 			add(gf);
+
+			if(curStage == 'disorientated')
+				add(venture);
 
 			// Shitty layering but whatev it works LOL
 			if (curStage == 'limo')
@@ -1893,7 +1907,10 @@ class PlayState extends MusicBeatState
 			smash = true;
 
 		if (FlxG.save.data.botplay && FlxG.keys.justPressed.ONE)
+		{
 			camHUD.visible = !camHUD.visible;
+			botPlayState.visible = !botPlayState.visible;
+		}
 
 		#if windows
 		if (executeModchart && luaModchart != null && songStarted)
@@ -2043,8 +2060,8 @@ class PlayState extends MusicBeatState
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
-			if (health > 3)
-				health = 3;
+			if (health > 2)
+				health = 2;
 
 			if (healthBar.percent < 20){
 				iconP1.animation.curAnim.curFrame = 1;
@@ -2337,7 +2354,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (health <= 0)
+		if (health <= 0 && !FlxG.save.data.practice)
 		{
 			boyfriend.stunned = true;
 
@@ -2526,7 +2543,7 @@ class PlayState extends MusicBeatState
 							{
 								if (Math.abs(daNote.noteData) == spr.ID)
 								{
-									spr.animation.play('confirm', true);
+									confirmNote(spr, true);
 								}
 								if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
 								{
@@ -2667,7 +2684,7 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
 		var achievementID:Int = 0;
-		if (SONG.validScore)
+		if (SONG.validScore && !FlxG.save.data.botplay && !FlxG.save.data.practice)
 		{
 			#if !switch
 			Highscore.saveScore(SONG.song, Math.round(songScore), storyDifficulty);
@@ -3271,10 +3288,20 @@ class PlayState extends MusicBeatState
 								if(rep.replay.songNotes.contains(HelperFunctions.truncateFloat(daNote.strumTime, 2)))
 								{
 									goodNoteHit(daNote);
+									playerStrums.forEach(function(spr:FlxSprite)
+									{
+										if(Math.abs(daNote.noteData) == spr.ID)
+											confirmNote(spr, true);
+									});
 									boyfriend.holdTimer = daNote.sustainLength;
 								}
 							}else {
 								goodNoteHit(daNote);
+								playerStrums.forEach(function(spr:FlxSprite)
+								{
+									if(Math.abs(daNote.noteData) == spr.ID)
+										confirmNote(spr, true);
+								});
 								boyfriend.holdTimer = daNote.sustainLength;
 							}
 						}
@@ -3461,6 +3488,14 @@ class PlayState extends MusicBeatState
 				if(note.rating == 'sick' && FlxG.save.data.noteSplashes && !FlxG.save.data.optimization)
 					makeSplash(note);
 
+				playerStrums.forEach(function(spr:FlxSprite)
+					{
+						if (Math.abs(note.noteData) == spr.ID)
+						{
+							confirmNote(spr, true);
+						}
+					});
+
 				if (health < 2)
 					health += 0.1;
 
@@ -3507,14 +3542,6 @@ class PlayState extends MusicBeatState
 					if(!loadRep && note.mustPress)
 						saveNotes.push(HelperFunctions.truncateFloat(note.strumTime, 2));
 					
-					playerStrums.forEach(function(spr:FlxSprite)
-					{
-						if (Math.abs(note.noteData) == spr.ID)
-						{
-							spr.animation.play('confirm', true);
-						}
-					});
-					
 					note.wasGoodHit = true;
 					vocals.volume = 1;
 		
@@ -3551,6 +3578,11 @@ class PlayState extends MusicBeatState
 				resetFastCar();
 			});
 		}
+	}
+
+	function confirmNote(spr:FlxSprite, force:Bool)
+	{
+		spr.animation.play('confirm', force);
 	}
 
 	var trainMoving:Bool = false;

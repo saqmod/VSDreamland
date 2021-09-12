@@ -8,6 +8,12 @@ class CoolUtil
 {
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
 
+	public static var difficultyStuff:Array<Dynamic> = [
+		['Easy'],
+		['Normal'],
+		['Hard']
+	];
+
 	public static function difficultyString():String
 	{
 		return difficultyArray[PlayState.storyDifficulty];
